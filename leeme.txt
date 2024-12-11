@@ -1,0 +1,54 @@
+Crear carpeta client y carpeta server.
+******************************       BACKEND         ***************************
+Desde terminal entrar a carpeta server.
+Terminal: .\server> yarn init -y  --> crea package.json  (si sale error entrar a power shell y ejecutar lo siguiente y luego volver a intentarlo : Set-ExecutionPolicy RemoteSigned -Scope CurrentUser).
+Agregar en el archivo package.json : "type": "module" --> Para poder usar import xxx  from xxx desde React.
+Terminal: .\server> yarn add mysql2 --> Biblioteca para NodeJs para conectarse a Mysql.
+Terminal: .\server> yarn add cors --> MidleWare, para que el backend pueda ser llamado desde el frontEnd.
+Terminal: .\server> yarn add dotenv --> (Opcional):Variables de entorno, segunridad, para no exponer credenciales en  GitHub.
+Terminal: .\server> yarn add express --> Gestionar las rutas, peticiones y respuestas HTTP.
+Terminal: .\server> yarn add nodemon -D --> Reinicia automáticamente el servidor cada vez que se detecta un cambio en el código. (-D para solo dependencia de desarrollo).
+Agregar en el archivo package.json :  
+"scripts": {
+    "dev": "npx nodemon app.js"
+  }.
+Crear archivo server\app.js.
+Crear archivo server\.env --> Creamos las variables de entorno
+En el archivo server\database.js --> Referenciamos las variables de entorno(server\.env)  y creamos conexión con mysql y creamos los métodos CRUD y transaccionales.
+En el archivo server\app.js --> importamos mètodos de database.js y creamos listen al puerto 8080
+Terminal: .\server> yarn dev --> Levanta el backend. Llama internamente a package.json scripts {"dev": "npx nodemon app.js"
+En el archivo server\app.js --> Creamos los request get,post,put,delete
+En el archivo server\app.js --> Previamente hacer una prueba de cualquier servicio con Postman y verficar el atributo : Access-Control-Allow-Origin --> Ese valor determina el dominio que tiene acceso a la API(backend)colocarlo en origin: "http://127.0.0.1:8081". Finalmente colocar dicho valor en la variable optionCors/origin: "http://127.0.0.1:8081"
+
+
+
+******************************       FRONTEND         ***************************
+Terminal: .\client> npx create-expo-app . --template blank   --> Crea el proyecto en la carpeta client e instala todas las dependencias.
+Terminal: .\client> npx expo install react-dom react-native-web @expo/metro-runtime --> Para ver el FrontEnd desde Navegador Web
+Terminal: .\client> npx expo install @react-navigation/native --> Libreria para navegar entre pantallas 
+Terminal: .\client> npx expo install @react-navigation/drawer --> Libreria para navegar entre pantallas
+Terminal: .\client> npx expo install expo-image-picker --> Libreria para manejar la selección de imágenes con la biblioteca integrada expo-image-picker, fotos, camara.
+Terminal: .\client> npx expo install expo-file-system --> Convierte la URI de la imagen a base64, para enviar la imagen al servidor en un formato binario(Mysql tipo dato blob).
+
+Entrar a Android Studio y abrir el emulador 
+Terminal: .\client> npx expo start -c   Luego --› Press a │ open Android --> Inicia/ejecuta frontEnd.
+
+
+**********************************   COMANDOS IMPORTANTES  *****************************************
+Terminal: \client> npx expo-doctor --> Hace un diagnostico de los componentes instalados, verificará posibles problemas de configuración en tu entorno y las dependencias de tu proyecto.
+
+
+*********************************  DEPENDENCIAS  *********************************
+{
+  "dependencies": {
+    "expo": "^49.0.0", // Verifica siempre la última versión compatible. Expo facilita la creación de aplicaciones React Native y asegura compatibilidad con React y React Native.
+    "react": "^18.3.0", // React compatible con las últimas versiones. La última versión estable del framework base para construir aplicaciones nativas.
+    "react-dom": "^18.3.0", // Bibliotecas React esenciales, necesarias tanto para aplicaciones web como móviles.
+    "react-native": "0.73.8", // Última versión estable
+    "react-native-web": "^0.19.6" // Permite usar componentes React Native en aplicaciones web.
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.20", // Esencial para compilar el código.
+    "expo-cli": "^6.4.7" // Si lo usas localmente en el proyecto
+  }
+}
