@@ -179,7 +179,6 @@ and r.fechaHora = ?;`,
       [idPersona, fechaHora]
     );
     //console.log("Resultado de la consulta:", result);
-    //console.log("Resultado de la consulta:", result);
     return result;
   } catch (error) {
     console.error("Error fetching calendar persona:", error);
