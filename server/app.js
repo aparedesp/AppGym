@@ -9,6 +9,7 @@ import {
   getCalendarioPersona,
   reservar,
   borrarReserva,
+  testConnection
 } from "./database.js"; //Importamos métodos de database.js
 import cors from "cors"; //MidleWare, para que el backend pueda ser llamado desde el frontEnd.
 
@@ -39,6 +40,11 @@ const corsOption = {
 const app = express();
 app.use(express.json()); //El backend solo hará caso a los request que body de respuesta es json
 app.use(cors(corsOption)); //Que puede y que no puede consumir el FrontEnd
+
+app.get("/testconnection", async (req, res) => {
+ const testcnx = await testConnection();
+  res.status(200).send(testcnx);
+});
 
 app.post("/personaLogin", async (req, res) => {
   const { docidentidad, contrasena } = req.body;

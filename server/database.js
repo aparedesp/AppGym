@@ -9,8 +9,24 @@ const pool = mysql
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
+    port: process.env.MYSQL_PORT || 3306, // Puerto
+    waitForConnections: true,
+    connectionLimit: 10,
+    connectTimeout: 10000, // Tiempo en milisegundos (10 segundos)
+    queueLimit: 0,
   })
   .promise();
+
+export async function testConnection() {
+  try {
+    const connection = await pool.getConnection();
+    console.log("Connected to database");
+    connection.release();
+    return "Ok";
+  } catch (error) {
+    console.error("Database connection failed:", error);
+  }
+}
 
 export async function getPersonaLogin(docidentidad, contrasena) {
   try {
@@ -138,7 +154,6 @@ export async function updatePersona(
   } catch (error) {
     console.error("Error update persona:", error);
     throw error;
-
   }
 }
 
