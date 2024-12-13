@@ -38,65 +38,66 @@ FOREIGN KEY (`idRol`) REFERENCES `rol`(`idRol`)
    idRol2: Profesor
 */
 
+
 INSERT INTO persona (idRol,nombre,apellidos ,email ,docidentidad ,peso ,altura ,
 fechaNacimiento ,sexo ,direccion ,telefono, contrasena ) 
 VALUES (2,'Carlos','El Sueco','elsueco@gmail.com','111P',75,175,
-'10-01-1995','hombre','calle ttt Madrid','658745125','123');
+'1995-10-01','hombre','calle ttt Madrid','658745125','123');
 
 INSERT INTO persona (idRol,nombre,apellidos ,email ,docidentidad ,peso ,altura ,
 fechaNacimiento ,sexo ,direccion ,telefono, contrasena ) 
 VALUES (2,'Abraham','Perales Peña','aperales@gmail.com','222P',75,175,
-'10-01-1995','hombre','calle ttt Madrid','658745125','123');
+'1993-03-15','hombre','calle ttt Madrid','658745125','123');
 
 INSERT INTO persona (idRol,nombre,apellidos ,email ,docidentidad ,peso ,altura ,
 fechaNacimiento ,sexo ,direccion ,telefono, contrasena ) 
 VALUES (1,'Juan','Perez Morales','jparez@gmail.com','111A',80,180,
-'21-10-1980','hombre','calle Aa Madrid','612476582','123');
+'1980-10-21','hombre','calle Aa Madrid','612476582','123');
 
 INSERT INTO persona (idRol,nombre,apellidos ,email ,docidentidad ,peso ,altura ,
 fechaNacimiento ,sexo ,direccion ,telefono, contrasena ) 
 VALUES (1,'Martha','Rodriguez Muñoz','mrodriguez@gmail.com','222A',77,165,
-'01-01-2001','mujer','calle bbb Madrid','611458749','123');
+'2001-05-14','mujer','calle bbb Madrid','611458749','123');
 
 INSERT INTO persona (idRol,nombre,apellidos ,email ,docidentidad ,peso ,altura ,
 fechaNacimiento ,sexo ,direccion ,telefono, contrasena ) 
 VALUES (1,'Antonio','Lopez Lozano','alopez@gmail.com','333A',90,175,
-'05-03-1999','hombre','calle nnnn Madrid','915478452','123');
+'1999-09-12','hombre','calle nnnn Madrid','915478452','123');
 
 INSERT INTO persona (idRol,nombre,apellidos ,email ,docidentidad ,peso ,altura ,
 fechaNacimiento ,sexo ,direccion ,telefono, contrasena ) 
 VALUES (1,'Enrique','Pastor Recio','epastor@gmail.com','444A',90,175,
-'21-09-1996','hombre','calle yyy Madrid','123456789','123');
+'1996-11-07','hombre','calle yyy Madrid','123456789','123');
 
 INSERT INTO persona (idRol,nombre,apellidos ,email ,docidentidad ,peso ,altura ,
 fechaNacimiento ,sexo ,direccion ,telefono, contrasena ) 
 VALUES (1,'Rddrigo','Paredes','rparedes@gmail.com','555A',80,180,
-'19-09-1987','hombre','calle Aa Madrid','612478887','123');
+'1987-10-08','hombre','calle Aa Madrid','612478887','123');
 
 INSERT INTO persona (idRol,nombre,apellidos ,email ,docidentidad ,peso ,altura ,
 fechaNacimiento ,sexo ,direccion ,telefono, contrasena ) 
 VALUES (1,'Alicia','Mera','amera@gmail.com','666A',77,165,
-'01-01-2001','mujer','calle bbb Madrid','611458749','123');
+'2001-06-03','mujer','calle bbb Madrid','611458749','123');
 
 INSERT INTO persona (idRol,nombre,apellidos ,email ,docidentidad ,peso ,altura ,
 fechaNacimiento ,sexo ,direccion ,telefono, contrasena ) 
 VALUES (1,'Jorge','Benites','jbenites@gmail.com','777A',90,175,
-'01-02-1997','hombre','calle nnnn Madrid','915474562','123');
+'1997-02-01','hombre','calle nnnn Madrid','915474562','123');
 
 INSERT INTO persona (idRol,nombre,apellidos ,email ,docidentidad ,peso ,altura ,
 fechaNacimiento ,sexo ,direccion ,telefono, contrasena ) 
 VALUES (1,'Julio','Ventura','jventura@gmail.com','888A',90,175,
-'25-03-1998','hombre','calle yyy Madrid','123462541','123');
+'1998-08-12','hombre','calle yyy Madrid','123462541','123');
 
 INSERT INTO persona (idRol,nombre,apellidos ,email ,docidentidad ,peso ,altura ,
 fechaNacimiento ,sexo ,direccion ,telefono, contrasena ) 
 VALUES (1,'Santiago','Veliz','sveliz@gmail.com','999A',90,175,
-'13-08-1999','hombre','calle yyy Madrid','1958745214','123');
+'1999-11-10','hombre','calle yyy Madrid','1958745214','123');
 
 INSERT INTO persona (idRol,nombre,apellidos ,email ,docidentidad ,peso ,altura ,
 fechaNacimiento ,sexo ,direccion ,telefono, contrasena ) 
 VALUES (1,'Alexis','Linares','alinares@gmail.com','000A',90,175,
-'15-07-1995','hombre','calle yyy Madrid','764654666','123');
+'1995-06-03','hombre','calle yyy Madrid','764654666','123');
 
 
 CREATE TABLE `tipoClase` (

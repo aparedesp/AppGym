@@ -21,7 +21,7 @@ SELECT
 FROM persona p
 JOIN rol rp 
     ON p.idRol = rp.idRol
-JOIN personatipoclase ptc 
+JOIN personaTipoClase ptc 
     ON ptc.idPersona = p.idPersona
 CROSS JOIN fechas f
 CROSS JOIN horas h
