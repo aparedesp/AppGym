@@ -18,7 +18,6 @@ const whitelist = [
   "http://192.168.1.132:8081",
   "http://localhost:8081",
   "http://127.0.0.1:8081",
-  //"https://appgym-production.up.railway.app",
 ];
 
 //Access-Control-Allow-Origin --> determina el dominio que tiene acceso a la API(backend)
