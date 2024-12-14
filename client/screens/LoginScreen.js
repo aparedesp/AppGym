@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { BACKEND_URL } from "../.env"; // Importamos BACKEND_URL desde .env
+//import { BACKEND_URL } from "../.env"; // Importamos BACKEND_URL desde .env
 
 export default function LoginScreen({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -10,16 +10,19 @@ export default function LoginScreen({ onLogin }) {
     // Aquí puedes agregar lógica para el proceso de inicio de sesión,
     // como llamar a una API o validar los datos de entrada.
     try {
-      const response = await fetch(`${BACKEND_URL}/personaLogin`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          docidentidad: username,
-          contrasena: password,
-        }),
-      });
+      const response = await fetch(
+        `https://appgym-production.up.railway.app/personaLogin`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            docidentidad: username,
+            contrasena: password,
+          }),
+        }
+      );
 
       const data = await response.json();
 

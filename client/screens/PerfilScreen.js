@@ -79,7 +79,7 @@ const handleChangePhoto = async () => {
   const fetchUserData = useCallback(async () => {
     try {
       const response = await fetch(
-        `http://192.168.1.132:8080/personas/${user.idPersona}`,
+        `https://appgym-production.up.railway.app/personas/${user.idPersona}`,
         {
           method: "GET",
           headers: {
@@ -153,7 +153,7 @@ const handleSave = async () => {
     const photoPayload = base64Image;
 
     const response = await fetch(
-      `http://192.168.1.132:8080/personas/${user.idPersona}`,
+      `https://appgym-production.up.railway.app/personas/${user.idPersona}`,
       {
         method: "PUT",
         headers: {

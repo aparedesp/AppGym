@@ -42,7 +42,7 @@ export default function ReservaScreen2({ route }) {
     async (fechaHora_) => {
       try {
         const response = await fetch(
-          `http://192.168.1.132:8080/personaCalendario`,
+          `https://appgym-production.up.railway.app/personaCalendario`,
           {
             method: "POST",
             headers: {
@@ -180,16 +180,19 @@ export default function ReservaScreen2({ route }) {
 
   const handleReservar = async (idPersona_, idReserva_) => {
     try {
-      const response = await fetch(`http://192.168.1.132:8080/reservar`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          idPersona: idPersona_,
-          idReserva: idReserva_,
-        }),
-      });
+      const response = await fetch(
+        `https://appgym-production.up.railway.app/reservar`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            idPersona: idPersona_,
+            idReserva: idReserva_,
+          }),
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
@@ -211,15 +214,18 @@ export default function ReservaScreen2({ route }) {
 
   const handleBorrarReserva = async (idReserva_) => {
     try {
-      const response = await fetch(`http://192.168.1.132:8080/borrarReserva`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          idReserva: idReserva_,
-        }),
-      });
+      const response = await fetch(
+        `https://appgym-production.up.railway.app/borrarReserva`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            idReserva: idReserva_,
+          }),
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
