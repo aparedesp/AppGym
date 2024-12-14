@@ -130,6 +130,9 @@ export async function updatePersona(
   try {
     // Convertir base64 a binario
     const fotoBinaria = foto ? Buffer.from(foto, "base64") : null;
+    const fechaNacimientoMySQL = new Date(fechaNacimiento)
+      .toISOString()
+      .slice(0, 10); // Obtiene solo 'YYYY-MM-DD'
 
     const [result] = await pool.query(
       `UPDATE persona SET nombre = ?, apellidos = ?, email = ?, docidentidad = ?, peso = ?, altura = ?,
@@ -141,7 +144,7 @@ export async function updatePersona(
         docidentidad,
         peso,
         altura,
-        fechaNacimiento,
+        fechaNacimientoMySQL,
         sexo,
         direccion,
         telefono,
