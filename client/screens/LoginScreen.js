@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { BACKEND_URL } from "@env"; // Importamos BACKEND_URL desde .env
+import { BACKEND_URL } from "../.env"; // Importamos BACKEND_URL desde .env
 
 export default function LoginScreen({ onLogin }) {
   const [username, setUsername] = useState("");
