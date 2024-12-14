@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import { BACKEND_URL } from "@env";
+//import { BACKEND_URL } from "@env";
 
 export default function LoginScreen({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -10,7 +10,7 @@ export default function LoginScreen({ onLogin }) {
     // Aquí puedes agregar lógica para el proceso de inicio de sesión,
     // como llamar a una API o validar los datos de entrada.
     try {
-      const response = await fetch("${BACKEND_URL}/personaLogin", {
+      const response = await fetch("http://192.168.1.132:8080/personaLogin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
