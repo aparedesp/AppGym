@@ -11,7 +11,7 @@ export default function LoginScreen({ onLogin }) {
     // como llamar a una API o validar los datos de entrada.
     try {
       const response = await fetch(
-        "https://appgym-production.up.railway.app:8080/personaLogin",
+        "https://appgym-production.up.railway.app/personaLogin",
         {
           method: "POST",
           headers: {
