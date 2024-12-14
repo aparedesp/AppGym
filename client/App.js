@@ -13,6 +13,7 @@ import ChatScreen from "./screens/ChatScreen";
 //import PagosScreen from "./screens/PagosScreen";
 import PerfilScreen from "./screens/PerfilScreen";
 
+
 const Drawer = createDrawerNavigator();
 
 export default function App() {

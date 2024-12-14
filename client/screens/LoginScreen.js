@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { BACKEND_URL } from "@env";
 
 export default function LoginScreen({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -9,7 +10,7 @@ export default function LoginScreen({ onLogin }) {
     // Aquí puedes agregar lógica para el proceso de inicio de sesión,
     // como llamar a una API o validar los datos de entrada.
     try {
-      const response = await fetch("http://192.168.1.132:8080/personaLogin", {
+      const response = await fetch("${BACKEND_URL}/personaLogin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -25,7 +26,7 @@ export default function LoginScreen({ onLogin }) {
       if (response.ok) {
         onLogin(data); // Cambiar el estado para indicar que el usuario está autenticado
         //Alert.alert("Éxito", "Inicio de sesión exitoso....");
-        //console.log("Éxito", "Inicio de sesión exitoso.");
+        console.log("Éxito", "Inicio de sesión exitoso.");
         // Maneja la respuesta del servidor (e.g., guardar token o redirigir)
       } else {
         alert("Credenciales incorrectas!!!");
