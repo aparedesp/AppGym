@@ -92,6 +92,9 @@ const handleChangePhoto = async () => {
 
       if (response.ok) {
         console.log("Datos recibidos del servidor:", data);
+        const fechaNacimientoMySQL = new Date(data.fechaNacimiento)
+          .toISOString()
+          .slice(0, 10); // Obtiene solo 'YYYY-MM-DD'
 
         setName(data.nombre || "");
         setApellidos(data.apellidos || "");
@@ -99,35 +102,33 @@ const handleChangePhoto = async () => {
         setDocidentidad(data.docidentidad || "");
         setPeso(data.peso);
         setAltura(data.altura);
-        setFechaNacimiento(data.fechaNacimiento || "");
+        setFechaNacimiento(fechaNacimientoMySQL || "");
         setSexo(data.sexo || "");
         setDireccion(data.direccion || "");
         setPhone(data.telefono || "");
         setContrasena(data.contrasena || "");
-       
-         if (data.foto) {
-           // Verifica si la foto es un Buffer o ya está en formato Base64
-           if (data.foto.type === "Buffer") {
-            console.log("Entró a lectura Buffer")
-             // Convierte Buffer a Base64
-             const base64Image = `data:image/jpeg;base64,${Buffer.from(
-               data.foto.data
-             ).toString("base64")}`;
-             setProfilePic(base64Image);
-           } else if (typeof data.foto === "string") {
-             // Ya está en formato Base64
-             console.log("Entró a lectura string");
-             setProfilePic(`data:image/jpeg;base64,${data.foto}`);
-           } else {
-             console.warn("Formato de imagen no reconocido.");
-             setProfilePic("https://via.placeholder.com/150");
-           }
-         } else {
-           console.warn("No se recibió una foto del servidor.");
-           setProfilePic("https://via.placeholder.com/150");
-         }
 
-     
+        if (data.foto) {
+          // Verifica si la foto es un Buffer o ya está en formato Base64
+          if (data.foto.type === "Buffer") {
+            console.log("Entró a lectura Buffer");
+            // Convierte Buffer a Base64
+            const base64Image = `data:image/jpeg;base64,${Buffer.from(
+              data.foto.data
+            ).toString("base64")}`;
+            setProfilePic(base64Image);
+          } else if (typeof data.foto === "string") {
+            // Ya está en formato Base64
+            console.log("Entró a lectura string");
+            setProfilePic(`data:image/jpeg;base64,${data.foto}`);
+          } else {
+            console.warn("Formato de imagen no reconocido.");
+            setProfilePic("https://via.placeholder.com/150");
+          }
+        } else {
+          console.warn("No se recibió una foto del servidor.");
+          setProfilePic("https://via.placeholder.com/150");
+        }
       }
     } catch (error) {
       console.error("Error:", error);

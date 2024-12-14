@@ -83,6 +83,9 @@ export async function insertPersona(
   foto
 ) {
   try {
+    const fechaNacimientoMySQL = new Date(fechaNacimiento)
+      .toISOString()
+      .slice(0, 10); // Obtiene solo 'YYYY-MM-DD'
     const [result] = await pool.query(
       `INSERT INTO persona (nombre,apellidos,email,docidentidad,peso,
       altura,fechaNacimiento,sexo,direccion,telefono,contrasena,estadoLogueo,fechaHoraUltimoLogueo,foto) 
@@ -94,7 +97,7 @@ export async function insertPersona(
         docidentidad,
         peso,
         altura,
-        fechaNacimiento,
+        fechaNacimientoMySQL,
         sexo,
         direccion,
         telefono,
