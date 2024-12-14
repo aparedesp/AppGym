@@ -10,16 +10,19 @@ export default function LoginScreen({ onLogin }) {
     // Aquí puedes agregar lógica para el proceso de inicio de sesión,
     // como llamar a una API o validar los datos de entrada.
     try {
-      const response = await fetch("http://192.168.1.132:8080/personaLogin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          docidentidad: username,
-          contrasena: password,
-        }),
-      });
+      const response = await fetch(
+        "https://appgym-production.up.railway.app:8080/personaLogin",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            docidentidad: username,
+            contrasena: password,
+          }),
+        }
+      );
 
       const data = await response.json();
 
