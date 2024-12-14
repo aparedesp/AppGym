@@ -29,6 +29,7 @@ Terminal: .\client> npx expo install @react-navigation/native --> Libreria para 
 Terminal: .\client> npx expo install @react-navigation/drawer --> Libreria para navegar entre pantallas
 Terminal: .\client> npx expo install expo-image-picker --> Libreria para manejar la selección de imágenes con la biblioteca integrada expo-image-picker, fotos, camara.
 Terminal: .\client> npx expo install expo-file-system --> Convierte la URI de la imagen a base64, para enviar la imagen al servidor en un formato binario(Mysql tipo dato blob).
+Terminal: .\client> npm install react-native-dotenv --save  --> Para variables de entorno
 
 Entrar a Android Studio y abrir el emulador 
 Terminal: .\client> npx expo start -c   Luego --› Press a │ open Android --> Inicia/ejecuta frontEnd.
