@@ -46,12 +46,9 @@ export default function App() {
     <NavigationContainer>
       {!isAuthenticated ? (
         <Stack.Navigator>
-          <Stack.Screen
-            name="LoginScreen"
-            component={(props) => (
-              <LoginScreen {...props} onLogin={handleLogin} />
-            )}
-          />
+          <Stack.Screen name="LoginScreen">
+            {(props) => <LoginScreen {...props} onLogin={handleLogin} />}
+          </Stack.Screen>
           <Stack.Screen name="RegistroScreen" component={RegistroScreen} />
         </Stack.Navigator>
       ) : (
