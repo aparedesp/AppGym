@@ -12,6 +12,7 @@ import {
   testConnection
 } from "./database.js"; //Importamos métodos de database.js
 import cors from "cors"; //MidleWare, para que el backend pueda ser llamado desde el frontEnd.
+const nodemailer = require("nodemailer");
 
 // Lista blanca de IPs o dominios permitidos
 const whitelist = [
@@ -173,5 +174,30 @@ app.listen(8080, () => {
 });
 //server.timeout = 5000; // 5 segundos
 
+app.post("/send-email", async (req, res) => {
+  const { to, subject, body } = req.body;
 
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "soportesistemaapp@gmail.com",
+        pass: "Soporte123$", // Usa variables de entorno para mayor seguridad
+      },
+    });
+
+    const mailOptions = {
+      from: "soportesistemaapp@gmail.com",
+      to,
+      subject,
+      text: body,
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).send({ message: "Correo enviado correctamente." });
+  } catch (error) {
+    console.error("Error al enviar el correo:", error);
+    res.status(500).send({ message: "Error al enviar el correo." });
+  }
+});
 

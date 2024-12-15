@@ -50,17 +50,37 @@ export default function RegistroScreen({ navigation }) {
       );
 
       if (response.ok) {
-        Alert.alert(
-          "Registro exitoso",
-          "Ha sido registrado correctamente.",
-          [{ text: "OK", onPress: () => navigation.navigate("LoginScreen") }]
+        // Enviar correo con las credenciales al usuario
+        const emailResponse = await fetch(
+          "https://appgym-production.up.railway.app/send-email",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              to: email,
+              subject: "Registro Exitoso - Tus Credenciales",
+              body: `Hola ${nombre},\n\nGracias por registrarte. Tus credenciales son:\n\nUsuario: ${docidentidad}\nContraseña: ${contrasena}\n\n¡Bienvenido!\n\nEquipo AppGym`,
+            }),
+          }
         );
+
+        if (emailResponse.ok) {
+          Alert.alert(
+            "Registro exitoso",
+            "Ha sido registrado correctamente. Se ha enviado un correo con tus credenciales.",
+            [{ text: "OK", onPress: () => navigation.navigate("LoginScreen") }]
+          );
+        } else {
+          Alert.alert(
+            "Registro exitoso",
+            "Se registró correctamente, pero no se pudo enviar el correo. Por favor, contacta al soporte."
+          );
+        }
       } else {
         const errorData = await response.json();
-        Alert.alert(
-          "Error",
-          errorData.message || "Error al registrar."
-        );
+        Alert.alert("Error", errorData.message || "Error al registrar.");
       }
     } catch (error) {
       console.error("Error al registrar:", error);
@@ -68,9 +88,31 @@ export default function RegistroScreen({ navigation }) {
     }
   };
 
+
   return (
     <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
       <Text style={styles.title}>Registro de Alumno</Text>
+
+      <Text style={[styles.label, styles.highlightLabel]}>
+        Documento de Identidad
+      </Text>
+      <TextInput
+        style={[styles.input, styles.highlightInput]}
+        value={docidentidad}
+        onChangeText={setDocIdentidad}
+        placeholder="Ingrese su documento de identidad"
+        placeholderTextColor="#888"
+      />
+
+      <Text style={[styles.label, styles.highlightLabel]}>Contraseña</Text>
+      <TextInput
+        style={[styles.input, styles.highlightInput]}
+        value={contrasena}
+        onChangeText={setContrasena}
+        placeholder="Ingrese su contraseña"
+        placeholderTextColor="#888"
+        secureTextEntry
+      />
 
       <Text style={styles.label}>Nombre</Text>
       <TextInput
@@ -98,25 +140,6 @@ export default function RegistroScreen({ navigation }) {
         placeholder="Ingrese su correo"
         placeholderTextColor="#888"
         keyboardType="email-address"
-      />
-
-      <Text style={styles.label}>Documento de Identidad</Text>
-      <TextInput
-        style={styles.input}
-        value={docidentidad}
-        onChangeText={setDocIdentidad}
-        placeholder="Ingrese su documento de identidad"
-        placeholderTextColor="#888"
-      />
-
-      <Text style={styles.label}>Contraseña</Text>
-      <TextInput
-        style={styles.input}
-        value={contrasena}
-        onChangeText={setContrasena}
-        placeholder="Ingrese su contraseña"
-        placeholderTextColor="#888"
-        secureTextEntry
       />
 
       <TouchableOpacity style={styles.button} onPress={handleRegistro}>
@@ -164,5 +187,14 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  highlightLabel: {
+    color: "#FFD700", // Color dorado para resaltar el texto
+    fontWeight: "bold",
+  },
+  highlightInput: {
+    borderColor: "#FFD700", // Borde dorado
+    borderWidth: 2, // Más ancho que el resto
+    backgroundColor: "#333", // Fondo ligeramente distinto
   },
 });
