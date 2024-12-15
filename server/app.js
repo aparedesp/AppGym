@@ -39,7 +39,8 @@ const corsOption = {
 };
 
 const app = express();
-app.use(express.json()); //El backend solo hará caso a los request que body de respuesta es json
+app.use(express.json({ limit: "10mb" })); //El backend solo hará caso a los request que body de respuesta es json, y como limite un cuerpo de 10 mb
+app.use(express.urlencoded({ limit: "10mb", extended: true }));//Aumentar el límite de tamaño de solicitud
 app.use(cors(corsOption)); //Que puede y que no puede consumir el FrontEnd
 
 app.get("/testconnection", async (req, res) => {
