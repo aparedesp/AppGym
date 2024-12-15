@@ -75,7 +75,8 @@ export default function RegistroScreen({ navigation }) {
         } else {
           Alert.alert(
             "Registro exitoso",
-            "Se registró correctamente, pero no se pudo enviar el correo. Por favor, contacta al soporte."
+            "Se registró correctamente, pero no se pudo enviar el correo. Por favor, contacta al soporte.",
+            [{ text: "OK", onPress: () => navigation.navigate("LoginScreen") }]
           );
         }
       } else {
