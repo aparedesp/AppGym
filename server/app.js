@@ -182,7 +182,7 @@ app.post("/send-email", async (req, res) => {
       service: "gmail",
       auth: {
         user: "appsoportesistemas@gmail.com",
-        pass: "Soporte123$", // Usa variables de entorno para mayor seguridad
+        pass: "qote xxyp ufne xmzj$", // Usa variables de entorno para mayor seguridad
       },
     });
 
