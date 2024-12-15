@@ -8,6 +8,7 @@ Terminal: .\server> yarn add cors --> MidleWare, para que el backend pueda ser l
 Terminal: .\server> yarn add dotenv --> (Opcional):Variables de entorno, segunridad, para no exponer credenciales en  GitHub.
 Terminal: .\server> yarn add express --> Gestionar las rutas, peticiones y respuestas HTTP.
 Terminal: .\server> yarn add nodemon -D --> Reinicia automáticamente el servidor cada vez que se detecta un cambio en el código. (-D para solo dependencia de desarrollo).
+Terminal: .\server> yarn add nodemailer --> Para envio de email
 Agregar en el archivo package.json :  
 "scripts": {
     "dev": "npx nodemon app.js"
