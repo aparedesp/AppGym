@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
-
+import { Ionicons } from "@expo/vector-icons";
 
 export default function PerfilScreen({ route }) {
   const { user } = route.params;
@@ -32,9 +32,8 @@ export default function PerfilScreen({ route }) {
   const [direccion, setDireccion] = useState();
   const [phone, setPhone] = useState();
   const [contrasena, setContrasena] = useState();
-
+  const [showPassword, setShowPassword] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-
   const [base64Image, setBase64Image] = useState();
 
   const handleChangePhoto = async () => {
@@ -215,15 +214,51 @@ export default function PerfilScreen({ route }) {
           </TouchableOpacity>
         )}
       </View>
+
       {/* Información del usuario */}
-      <Text style={styles.label}>Documento de Identidad (Usuario login)</Text>
-      <TextInput
-        style={[styles.input, styles.disabledInput]}
-        value={docidentidad}
-        onChangeText={setDocidentidad}
-        editable={false}
-      />
       <View style={styles.infoContainer}>
+        <Text style={[styles.label, styles.highlightLabel]}>
+          Documento de Identidad
+        </Text>
+        <TextInput
+          style={[
+            styles.input,
+            styles.highlightInput,
+            !isEditing && styles.disabledInput,
+          ]}
+          value={docidentidad}
+          onChangeText={setDocidentidad}
+          editable={false}
+        />
+
+        <View style={styles.passwordContainer}>
+          <Text style={[styles.label, styles.highlightLabel]}>Contraseña</Text>
+          <TouchableOpacity
+            style={styles.eyeButton}
+            onPress={() => setShowPassword(!showPassword)}
+          >
+            <Ionicons
+              name={showPassword ? "eye" : "eye-off"}
+              size={24}
+              color="#888"
+            />
+          </TouchableOpacity>
+        </View>
+
+        <TextInput
+          style={[
+            styles.input,
+            styles.highlightInput,
+            !isEditing && styles.disabledInput,
+          ]}
+          value={contrasena}
+          onChangeText={setContrasena}
+          placeholder="Contraseña"
+          placeholderTextColor="#888" // Color del placeholder
+          secureTextEntry={!showPassword} // Alternar entre ver y ocultar
+          editable={isEditing}
+        />
+
         <Text style={styles.label}>Nombre</Text>
         <TextInput
           style={[styles.input, !isEditing && styles.disabledInput]}
@@ -276,6 +311,8 @@ export default function PerfilScreen({ route }) {
           value={fechaNacimiento}
           onChangeText={setFechaNacimiento}
           editable={isEditing}
+          placeholder="YYYY-MM-DD"
+          placeholderTextColor="#888" // Color del placeholder
         />
         <Text style={styles.label}>Sexo</Text>
         <TextInput
@@ -298,14 +335,6 @@ export default function PerfilScreen({ route }) {
           onChangeText={setPhone}
           editable={isEditing}
           keyboardType="phone-pad"
-        />
-        <Text style={styles.label}>Contraseña</Text>
-        <TextInput
-          style={[styles.input, !isEditing && styles.disabledInput]}
-          value={contrasena}
-          onChangeText={setContrasena}
-          editable={isEditing}
-          keyboardType="visible-password"
         />
       </View>
       {/* Botones de acción */}
@@ -360,7 +389,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#fff",
     marginBottom: 5,
-    textTransform: "uppercase", // Texto en mayúsculas
+    //textTransform: "uppercase", // Texto en mayúsculas
   },
   input: {
     borderWidth: 1,
@@ -369,9 +398,23 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 15,
     fontSize: 16,
-    backgroundColor: "#2a2d31", // Fondo gris oscuro
-    color: "#fff", // Texto blanco
+    backgroundColor: "#2a2d31",
+    color: "#fff",
   },
+  passwordContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    position: "relative",
+  },
+
+  eyeButton: {
+    position: "absolute", // Absoluto para control exacto
+    right: 5, // Ajusta hacia la izquierda para que no se salga de la pantalla
+    zIndex: 1, // Asegura que esté por encima del TextInput
+    padding: 5, // Espaciado interno para mejor interacción
+  },
+
   disabledInput: {
     backgroundColor: "#3c4043",
     color: "#8a8a8a", // Texto gris tenue
@@ -408,5 +451,17 @@ const styles = StyleSheet.create({
   column: {
     flex: 1,
     marginHorizontal: 5, // Espaciado entre columnas
+  },
+  highlightLabel: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#ffeb3d", // Color amarillo brillante para resaltar
+  },
+
+  highlightInput: {
+    borderColor: "#ffeb3d",
+    backgroundColor: "#2e3b4e",
+    color: "#ffeb3d",
+    paddingHorizontal: 12,
   },
 });
