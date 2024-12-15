@@ -1,14 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-//import { BACKEND_URL } from "../.env"; // Importamos BACKEND_URL desde .env
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ImageBackground,
+  StyleSheet,
+  Alert,
+} from "react-native";
 
 export default function LoginScreen({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    // Aquí puedes agregar lógica para el proceso de inicio de sesión,
-    // como llamar a una API o validar los datos de entrada.
     try {
       const response = await fetch(
         `https://appgym-production.up.railway.app/personaLogin`,
@@ -27,13 +32,10 @@ export default function LoginScreen({ onLogin }) {
       const data = await response.json();
 
       if (response.ok) {
-        onLogin(data); // Cambiar el estado para indicar que el usuario está autenticado
-        //Alert.alert("Éxito", "Inicio de sesión exitoso....");
-        console.log("Éxito", "Inicio de sesión exitoso.");
-        // Maneja la respuesta del servidor (e.g., guardar token o redirigir)
+        onLogin(data);
+        console.log("Inicio de sesión exitoso.");
       } else {
-        alert("Credenciales incorrectas!!!");
-        //console.log("Error en el inicio de sesión.");
+        Alert.alert("Error", "Credenciales incorrectas.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -42,45 +44,74 @@ export default function LoginScreen({ onLogin }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Button title="Login" onPress={handleLogin} />
-    </View>
+    <ImageBackground
+      source={require("../assets/perfil.png")}
+      style={styles.background}
+    >
+      <View style={styles.container}>
+        <Text style={styles.title}>Bienvenido</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Usuario"
+          placeholderTextColor="#aaa"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Contraseña"
+          placeholderTextColor="#aaa"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Iniciar Sesión</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 16,
-    backgroundColor: "#fcfadf",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Fondo semitransparente
   },
   title: {
-    fontSize: 24,
-    marginBottom: 16,
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#fff",
+    marginBottom: 32,
   },
   input: {
-    width: "100%",
+    width: "80%",
     padding: 12,
-    marginVertical: 8,
+    marginVertical: 10,
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 4,
-    backgroundColor: "#ffffff",
+    borderColor: "#ddd",
+    borderRadius: 8,
+    backgroundColor: "#fff",
+    fontSize: 16,
+  },
+  button: {
+    marginTop: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 40,
+    backgroundColor: "#28a745",
+    borderRadius: 8,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });

@@ -72,7 +72,7 @@ const EquipateScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#121212", // Fondo oscuro principal
     padding: 10,
   },
   header: {
@@ -80,19 +80,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 10,
-    color: "#333",
+    color: "#fff",
   },
   list: {
     paddingBottom: 20,
   },
   card: {
     flexDirection: "row",
-    backgroundColor: "#fff",
+    backgroundColor: "#1E1E1E", // Tarjeta con fondo oscuro
     borderRadius: 10,
     marginVertical: 10,
     padding: 10,
     shadowColor: "#000",
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 3,
   },
@@ -109,11 +109,11 @@ const styles = StyleSheet.create({
   productName: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#333",
+    color: "#fff",
   },
   productPrice: {
     fontSize: 16,
-    color: "#555",
+    color: "#ccc",
     marginVertical: 5,
   },
   productStock: {

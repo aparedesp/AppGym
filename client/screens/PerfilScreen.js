@@ -13,8 +13,8 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 
+
 export default function PerfilScreen({ route }) {
-  
   const { user } = route.params;
 
   // Estados para los datos del perfil
@@ -37,44 +37,42 @@ export default function PerfilScreen({ route }) {
 
   const [base64Image, setBase64Image] = useState();
 
-const handleChangePhoto = async () => {
-  try {
-    const permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
+  const handleChangePhoto = async () => {
+    try {
+      const permissionResult =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (!permissionResult.granted) {
-      Alert.alert(
-        "Permiso requerido",
-        "Necesitamos acceder a tu galería para cambiar la foto."
-      );
-      return;
-    }
+      if (!permissionResult.granted) {
+        Alert.alert(
+          "Permiso requerido",
+          "Necesitamos acceder a tu galería para cambiar la foto."
+        );
+        return;
+      }
 
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions
-        ? ImagePicker.MediaTypeOptions.Images // Versión antigua
-        : [ImagePicker.MediaType.IMAGE], // Versión moderna
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 0.8,
-    });
-
-    if (result.assets && result.assets.length > 0) {
-      const fileUri = result.assets[0].uri;
-      const base64Image = await FileSystem.readAsStringAsync(fileUri, {
-        encoding: FileSystem.EncodingType.Base64,
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions
+          ? ImagePicker.MediaTypeOptions.Images // Versión antigua
+          : [ImagePicker.MediaType.IMAGE], // Versión moderna
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 0.8,
       });
 
-      setProfilePic(base64Image);
-      console.log("Se cargó imagen: ", base64Image.slice(0, 100), "...");
+      if (result.assets && result.assets.length > 0) {
+        const fileUri = result.assets[0].uri;
+        const base64Image = await FileSystem.readAsStringAsync(fileUri, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+
+        setProfilePic(base64Image);
+        console.log("Se cargó imagen: ", base64Image.slice(0, 100), "...");
+      }
+    } catch (error) {
+      console.error("Error al seleccionar la imagen:", error);
+      Alert.alert("Error", "No se pudo seleccionar la imagen.");
     }
-  } catch (error) {
-    console.error("Error al seleccionar la imagen:", error);
-    Alert.alert("Error", "No se pudo seleccionar la imagen.");
-  }
-};
-
-
+  };
 
   const fetchUserData = useCallback(async () => {
     try {
@@ -148,56 +146,56 @@ const handleChangePhoto = async () => {
     fetchUserData(); // Actualizar datos
   };
 
-const handleSave = async () => {
-  try {
-    // Enviar solo el contenido base64 al backend
-    const photoPayload = base64Image;
+  const handleSave = async () => {
+    try {
+      // Enviar solo el contenido base64 al backend
+      const photoPayload = base64Image;
 
-    const response = await fetch(
-      `https://appgym-production.up.railway.app/personas/${user.idPersona}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nombre: name,
-          apellidos: apellidos,
-          email: email,
-          docidentidad: docidentidad,
-          peso: peso,
-          altura: altura,
-          fechaNacimiento: fechaNacimiento,
-          sexo: sexo,
-          direccion: direccion,
-          telefono: phone,
-          contrasena: contrasena,
-          foto: photoPayload,
-        }),
-      }
-    );
-    // console.log(
-    //   "profilePic.split(",
-    //   ")[1]: " + profilePic.split(",")[1].split(",")[1]
-    // );
-    if (response.ok) {
-      const result = await response.json();
-      Alert.alert(
-        "Perfil actualizado",
-        "Los datos han sido guardados con éxito."
+      const response = await fetch(
+        `https://appgym-production.up.railway.app/personas/${user.idPersona}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nombre: name,
+            apellidos: apellidos,
+            email: email,
+            docidentidad: docidentidad,
+            peso: peso,
+            altura: altura,
+            fechaNacimiento: fechaNacimiento,
+            sexo: sexo,
+            direccion: direccion,
+            telefono: phone,
+            contrasena: contrasena,
+            foto: photoPayload,
+          }),
+        }
       );
-      console.log("Respuesta del servidor:", result);
-    } else {
-      const error = await response.json();
-      Alert.alert("Error", error.message || "Error al guardar los datos.");
+      // console.log(
+      //   "profilePic.split(",
+      //   ")[1]: " + profilePic.split(",")[1].split(",")[1]
+      // );
+      if (response.ok) {
+        const result = await response.json();
+        Alert.alert(
+          "Perfil actualizado",
+          "Los datos han sido guardados con éxito."
+        );
+        console.log("Respuesta del servidor:", result);
+      } else {
+        const error = await response.json();
+        Alert.alert("Error", error.message || "Error al guardar los datos.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      Alert.alert("Error", "No se pudo conectar al servidor.");
+    } finally {
+      setIsEditing(false); // Desactiva el modo de edición
     }
-  } catch (error) {
-    console.error("Error:", error);
-    Alert.alert("Error", "No se pudo conectar al servidor.");
-  } finally {
-    setIsEditing(false); // Desactiva el modo de edición
-  }
-};
+  };
 
   return (
     <ScrollView
@@ -217,7 +215,6 @@ const handleSave = async () => {
           </TouchableOpacity>
         )}
       </View>
-
       {/* Información del usuario */}
       <Text style={styles.label}>Documento de Identidad (Usuario login)</Text>
       <TextInput
@@ -251,23 +248,28 @@ const handleSave = async () => {
           editable={isEditing}
           keyboardType="email-address"
         />
-
-        <Text style={styles.label}>Peso</Text>
-        <TextInput
-          style={[styles.input, !isEditing && styles.disabledInput]}
-          value={peso?.toString()} // Convertir número a string
-          onChangeText={(value) => setPeso(Number(value) || "")} // Convertir string a número
-          editable={isEditing}
-          keyboardType="numeric"
-        />
-        <Text style={styles.label}>Altura</Text>
-        <TextInput
-          style={[styles.input, !isEditing && styles.disabledInput]}
-          value={altura?.toString()} // Convertir número a string
-          onChangeText={(value) => setAltura(Number(value) || "")} // Convertir string a número
-          editable={isEditing}
-          keyboardType="numeric"
-        />
+        <View style={styles.row}>
+          <View style={styles.column}>
+            <Text style={styles.label}>Peso</Text>
+            <TextInput
+              style={[styles.input, !isEditing && styles.disabledInput]}
+              value={peso?.toString()} // Convertir número a string
+              onChangeText={(value) => setPeso(Number(value) || "")} // Convertir string a número
+              editable={isEditing}
+              keyboardType="numeric"
+            />
+          </View>
+          <View style={styles.column}>
+            <Text style={styles.label}>Altura</Text>
+            <TextInput
+              style={[styles.input, !isEditing && styles.disabledInput]}
+              value={altura?.toString()} // Convertir número a string
+              onChangeText={(value) => setAltura(Number(value) || "")} // Convertir string a número
+              editable={isEditing}
+              keyboardType="numeric"
+            />
+          </View>
+        </View>
         <Text style={styles.label}>Fecha de Nacimiento</Text>
         <TextInput
           style={[styles.input, !isEditing && styles.disabledInput]}
@@ -306,7 +308,6 @@ const handleSave = async () => {
           keyboardType="visible-password"
         />
       </View>
-
       {/* Botones de acción */}
       <View style={styles.buttonsContainer}>
         {isEditing ? (
@@ -326,7 +327,7 @@ const handleSave = async () => {
 const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
-    backgroundColor: "#f8f9fa",
+    backgroundColor: "#1c1e21", // Fondo oscuro para tema fitness
   },
   scrollContent: {
     padding: 20,
@@ -339,59 +340,73 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 75,
-    borderWidth: 2,
-    borderColor: "#3a8c0c",
+    borderWidth: 3,
+    borderColor: "#4CAF50", // Verde brillante
   },
   changePicButton: {
     marginTop: 10,
-    backgroundColor: "#3a8c0c",
+    backgroundColor: "#4CAF50", // Botón verde brillante
     paddingVertical: 5,
     paddingHorizontal: 15,
-    borderRadius: 5,
+    borderRadius: 8,
   },
   changePicText: {
     color: "#fff",
     fontSize: 14,
-  },
-  infoContainer: {
-    marginBottom: 20,
+    fontWeight: "bold",
   },
   label: {
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#fff",
     marginBottom: 5,
-    color: "#333",
+    textTransform: "uppercase", // Texto en mayúsculas
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
+    borderColor: "#555",
+    borderRadius: 8,
     padding: 10,
     marginBottom: 15,
     fontSize: 16,
+    backgroundColor: "#2a2d31", // Fondo gris oscuro
+    color: "#fff", // Texto blanco
   },
   disabledInput: {
-    backgroundColor: "#e9ecef",
+    backgroundColor: "#3c4043",
+    color: "#8a8a8a", // Texto gris tenue
   },
   buttonsContainer: {
     flexDirection: "row",
     justifyContent: "center",
+    marginTop: 20,
   },
   editButton: {
-    backgroundColor: "#007bff",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
+    backgroundColor: "#2196F3", // Azul brillante
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+    marginHorizontal: 10,
   },
   saveButton: {
-    backgroundColor: "#28a745",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
+    backgroundColor: "#4CAF50", // Verde para guardar
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+    marginHorizontal: 10,
   },
   buttonText: {
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 15,
+  },
+  column: {
+    flex: 1,
+    marginHorizontal: 5, // Espaciado entre columnas
   },
 });

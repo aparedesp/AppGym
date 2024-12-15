@@ -46,7 +46,7 @@ const AtletasScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fcfadf",
+    backgroundColor: "#121212", // Fondo oscuro principal
     padding: 10,
   },
   header: {
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 20,
-    color: "#3a8c0c",
+    color: "#fff",
   },
   body: {
     flex: 1,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: "#567838",
+    backgroundColor: "#1E1E1E",
     justifyContent: "center",
     alignItems: "center",
     margin: 10,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
     fontWeight: "bold",
-    position: "absolute", // Esto coloca el texto sobre la imagen
+    position: "absolute",
   },
   backgroundImage: {
     flex: 1,

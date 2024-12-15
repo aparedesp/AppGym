@@ -454,14 +454,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1, // Ocupa todo el espacio disponible
     padding: 16,
-    backgroundColor: "#f8f9fa",
+    backgroundColor: "#121212", // Fondo oscuro principal
     alignItems: "center",
     justifyContent: "center",
   },
   header: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#343a40",
+    color: "#FFFFFF",
     marginBottom: 20,
     textAlign: "center",
   },
@@ -478,7 +478,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   buttonText: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -487,7 +487,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 20,
     marginBottom: 10,
-    color: "#343a40",
+    color: "#FFFFFF",
   },
   horaButtonContainer: {
     flexDirection: "row",
@@ -496,22 +496,22 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   horaButton: {
-    backgroundColor: "#28a745",
+    backgroundColor: "#4CAF50",
     paddingVertical: 7,
     paddingHorizontal: 7,
     margin: 2,
     borderRadius: 5,
   },
   horaButtonText: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontSize: 12,
   },
   selectedHoraButton: {
-    backgroundColor: "#007bff", // Color diferente para la hora seleccionada
+    backgroundColor: "#1E88E5", // Color diferente para la hora seleccionada
   },
   grupoContainer: {
     marginBottom: 20,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#1E1E1E", // Fondo oscuro para cada grupo
     padding: 10,
     borderRadius: 5,
     shadowColor: "#000",
@@ -523,30 +523,30 @@ const styles = StyleSheet.create({
   encabezadoGrupo: {
     marginBottom: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: "#333",
     paddingBottom: 5,
   },
   textoProfesor: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#007bff",
+    color: "#1E90FF",
   },
 
   alumnoUsuario: {
-    backgroundColor: "#f9f4ad", // Color para el usuario logueado
-    borderColor: "#0056b3",
+    backgroundColor: "#FFEB3D", // Color para el usuario logueado
+    borderColor: "#FFC107",
     borderWidth: 2,
   },
   alumnoDisponible: {
-    color: "#ffffff",
-    backgroundColor: "#c0c7cf", // Color para los alumnos disponibles
+    color: "#FFFFFF",
+    backgroundColor: "#555", // Color para los alumnos disponibles
   },
   alumnoNormal: {
-    backgroundColor: "#bcc1a7", // Color para los demás alumnos
+    backgroundColor: "#777", // Color para los demás alumnos
   },
 
   cuadroAlumno: {
-    backgroundColor: "#e9ecef",
+    backgroundColor: "#2E2E2E",
     borderRadius: 5,
     margin: 5,
     aspectRatio: 1, // Hace que el cuadro sea un cuadrado perfecto
@@ -555,8 +555,8 @@ const styles = StyleSheet.create({
     width: "22%", // Ajusta el ancho para que se vea bien con varios cuadros en una fila
   },
   textoAlumno: {
-    fontSize: 14,
-    color: "#495057",
+    fontSize: 12,
+    color: "#FFFFFF",
     textAlign: "center", // Centra el texto dentro del cuadro
   },
   listaAlumnos: {
@@ -581,7 +581,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#807c9c", // Violeta  para "Clase llena"
   },
   textoBoton: {
-    color: "#fff",
+    color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -589,5 +589,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 16,
     paddingBottom: 100, // Añade espacio adicional en la parte inferior
+  },
+  buttonPress: {
+    backgroundColor: "#3700B3",
   },
 });

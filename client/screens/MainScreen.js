@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -58,7 +58,11 @@ export default function MainScreen({ route, navigation }) {
   ];
 
   return (
-    <View style={styles.container}>
+    <ImageBackground
+      source={require("../assets/fondoapp3.png")} // Imagen de fondo
+      style={styles.background}
+      resizeMode="cover"
+    >
       {/* Cabecera */}
       <View style={styles.header}>
         <Text style={styles.title}>Proyecto DAM - Grupo 5</Text>
@@ -66,7 +70,6 @@ export default function MainScreen({ route, navigation }) {
       </View>
 
       {/* Cuerpo */}
-
       <View style={styles.body}>
         {items.map((item) => (
           <TouchableOpacity
@@ -101,24 +104,23 @@ export default function MainScreen({ route, navigation }) {
           <Ionicons name="logo-instagram" size={32} color="#C13584" />
         </TouchableOpacity>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    backgroundColor: "#fcfadf",
   },
   header: {
     height: 60,
-    backgroundColor: "#3a8c0c",
+    backgroundColor: "rgba(0, 0, 0, 0.6)", // Fondo semitransparente
     justifyContent: "center",
     alignItems: "center",
   },
   title: {
     color: "#fff",
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
   },
   body: {
@@ -127,35 +129,43 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexWrap: "wrap",
     flexDirection: "row",
+    padding: 10,
   },
   circleButton: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    backgroundColor: "#567838",
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    backgroundColor: "rgba(255, 255, 255, 0.9)", // Fondo semitransparente
     justifyContent: "center",
     alignItems: "center",
-    margin: 10,
+    margin: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 6,
     overflow: "hidden",
   },
   buttonText: {
-    color: "#b54210",
+    color: "#000",
     textAlign: "center",
-    fontSize: 25,
+    fontSize: 18,
     fontWeight: "bold",
-    position: "absolute", // Esto coloca el texto sobre la imagen
-  },
-  footer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10,
-    backgroundColor: "#f1f1f1",
+    backgroundColor: "rgba(255, 255, 255, 0.6)", // Fondo para mejorar contraste
+    padding: 5,
+    borderRadius: 5,
   },
   backgroundImage: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    width: "100%", // Asegura que la imagen cubra todo el botón
-    height: "100%", // Asegura que la imagen cubra todo el botón
+    width: "100%",
+    height: "100%",
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10,
+    backgroundColor: "rgba(0, 0, 0, 0.6)", // Fondo semitransparente
   },
 });

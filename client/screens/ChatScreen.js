@@ -15,7 +15,6 @@ const ChatScreen = () => {
   ]);
   const [input, setInput] = useState("");
 
-  // Manejar envío de mensajes
   const handleSend = () => {
     if (input.trim()) {
       setMessages((prevMessages) => [
@@ -47,7 +46,7 @@ const ChatScreen = () => {
           value={input}
           onChangeText={setInput}
           placeholder="Escribe un mensaje..."
-          placeholderTextColor="#888"
+          placeholderTextColor="#aaa"
         />
         <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
           <Text style={styles.sendButtonText}>Enviar</Text>
@@ -60,17 +59,17 @@ const ChatScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#121212", // Fondo oscuro
   },
   messagesContainer: {
     padding: 10,
   },
   messageBubble: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#1E1E1E", // Mensajes con fondo oscuro
     padding: 10,
     borderRadius: 10,
     marginVertical: 5,
-    alignSelf: "flex-start", // Cambiar a 'flex-end' si quieres mensajes del usuario
+    alignSelf: "flex-start",
     maxWidth: "80%",
   },
   messageText: {
@@ -82,18 +81,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     borderTopWidth: 1,
-    borderColor: "#ddd",
-    backgroundColor: "#fff",
+    borderColor: "#333",
+    backgroundColor: "#1E1E1E",
   },
   input: {
     flex: 1,
     height: 40,
-    borderColor: "#ccc",
+    borderColor: "#555",
     borderWidth: 1,
     borderRadius: 20,
     paddingHorizontal: 15,
     fontSize: 16,
-    backgroundColor: "#f9f9f9",
+    color: "#fff",
+    backgroundColor: "#252525",
   },
   sendButton: {
     marginLeft: 10,
