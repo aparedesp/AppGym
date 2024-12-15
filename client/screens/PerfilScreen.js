@@ -174,10 +174,10 @@ export default function PerfilScreen({ route }) {
   
 
       // Enviar solo el contenido base64 al backend
-       const formattedPhoto = profilePic
-         ? profilePic.split(",")[1] // Elimina el prefijo Base64 si existe
-         : null;
-        console.log("formattedPhoto al grabar:" + formattedPhoto);
+      //  const formattedPhoto = profilePic
+      //    ? profilePic.split(",")[1] // Elimina el prefijo Base64 si existe
+      //    : null;
+        //console.log("formattedPhoto al grabar:" + formattedPhoto);
       const response = await fetch(
         `https://appgym-production.up.railway.app/personas/${user.idPersona}`,
         {
@@ -197,7 +197,7 @@ export default function PerfilScreen({ route }) {
             direccion: direccion,
             telefono: phone,
             contrasena: contrasena,
-            foto: formattedPhoto, // Solo el contenido Base64
+            foto: profilePic, // Solo el contenido Base64
           }),
         }
       );

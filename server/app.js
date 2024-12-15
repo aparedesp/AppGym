@@ -127,11 +127,10 @@ app.put("/personas/:id", async (req, res) => {
     direccion,
     telefono,
     contrasena,
-    foto, // Recibimos la cadena base64
+    foto,
   } = req.body;
 
-  // Convertimos la foto de base64 a binario
-  const fotoBinaria = foto ? Buffer.from(foto, "base64") : null;
+
 
   const persona = await updatePersona(
     req.params.id,
@@ -146,7 +145,7 @@ app.put("/personas/:id", async (req, res) => {
     direccion,
     telefono,
     contrasena,
-    fotoBinaria
+    foto
   );
   res.status(200).send(persona);
 });
