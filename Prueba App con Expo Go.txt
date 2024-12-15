@@ -1,0 +1,4 @@
+1.-Descagar App Expo Go desde Play Store
+2.-Login --> user: alexispp80  / password: ExpoGo123$
+3.-Entrar a project : client
+4.-Creadenciales para entrar al sistema(perfil alumno) --> user: 111A  / password: 123

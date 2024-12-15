@@ -1,0 +1,26 @@
+Subir codigo a Github desde terminal visual studio code
+0.-Ubicarse en la carpeta principal del proyecto.
+        cd.. 
+1.-Asegúrate de que Git está instalado en tu máquina.
+	git --version 
+2.-Inicializa un repositorio Git en tu proyecto.Esto creará un directorio oculto .git.
+	git init
+3.-Agrega los archivos del proyecto al área de preparación.
+	git add .
+4.-Realiza un commit inicial.
+	git commit -m "Primer commit"
+5.-Vincular tu proyecto local con el repositorio remoto
+	git remote add origin <URL-del-repositorio>
+6.-Verifica que el remoto se haya agregado correctamente
+	git remote -v
+7.-Subir tu proyecto al repositorio de GitHub.
+	git branch -M main
+	git push -u origin main
+8.- Si en el futuro haces más cambios, solo necesitarás usar:
+	git add .
+	git commit -m "Descripción del cambio"
+	git push
+
+
+
+

@@ -1,0 +1,33 @@
+Publicacion Front.-
+
+Terminal: \client> 
+
+1.-Configura EAS CLI
+npm install -g eas-cli
+
+2.-Inicia sesión en tu cuenta de Expo:
+eas login
+user: alexispp80  / password: ExpoGo123$
+
+3.-Inicializa la configuración de EAS en tu proyecto:
+eas update:configure 
+Esto generará un archivo eas.json en la raíz de tu proyecto.
+
+4.-√ Would you like to automatically create an EAS project for @alexispp80/client?  Yes
+	Si aceptas crear automáticamente un proyecto EAS para @alexispp80/client, Expo configurará y vinculará tu proyecto local con un proyecto en tu cuenta de Expo (usuario @alexispp80). Esto simplifica el proceso de publicación y construcción de tu aplicación.
+	
+	¿Qué sucede al aceptar?
+	Proyecto EAS Creado:
+	Se crea un proyecto remoto en Expo para gestionar actualizaciones y builds.
+	Vinculación Automática:
+	El proyecto local se enlaza automáticamente con este proyecto remoto a través del archivo .eas.json.
+	Listo para Actualizaciones:
+	Puedes comenzar a usar comandos como "eas update" para publicar cambios.
+	
+5.-Publicar/republicar el frontEnd con EAS:
+eas update
+	Rama para gestionar versiones o estados de tu aplicación en Expo EAS: por defecto main
+		√ No branches found. Provide a branch name: ... main
+	Comentario de la rama 
+		? Provide an update message: » primera publicacion
+6.-Entrar a Expo.dev/Projects/Mi-proyecto/Updates/Update Groups/Entrar a Ultima publicacion/pinchar en "Preview/QR"

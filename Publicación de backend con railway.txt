@@ -1,0 +1,36 @@
+Publicar backend en railway
+
+1.-Sube código a github
+2.-Crear cuenta Railway con credenciales de github
+3.-En railway : New Project / Deploy from GitHub repo
+   3.1.-Colocar la url de tu repositorio github
+   3.2.-Settings:
+      3.2.1.-Root Directory
+      Configure where we should look for your code
+          /server    --> Subcarpeta del directorio Github en donde está mi backend
+	  3.2.2.-Custom Build Command
+	  Override the default build command that is run when building your app.
+		  yarn install
+	  3.2.3.-Custom Start Command
+	  Command that will be run to start new deployments.
+		  yarn start
+4.- url backend: https://appgym-production.up.railway.app
+	prueba: https://appgym-production.up.railway.app/testconnection
+
+
+Crear la base de datos Mysql en el mismo proyecto del backend de railway
+1.-Dentro de Project backend  de railway / Crear/ Database / add Mysql.
+2.-Ir a Variables y renombrar la base de datos que se creó por defecto.
+3.-Ingresar a workbench con las credenciales que genera la nueva base de datos creada.
+Pestaña vaiables: "MYSQL_PUBLIC_URL" cnx mysql con workbench :
+	host public: junction.proxy.rlwy.net
+	port:11379 
+	user: root 
+	password: hbqoRZmIcQJECoVePqEQAikdbBxCVrID
+	BBDD: proyecto_dam
+4.-Desde workbench Crear las tablas e insert ejecutando el script correspondiente.
+5.-En archivo .env colocar el host mysql local/interno: MYSQL_HOST="mysql.railway.internal"
+ya que el backend conectará con la base de datos mysql que está internamente en el mismo proyecto railway.
+
+
+

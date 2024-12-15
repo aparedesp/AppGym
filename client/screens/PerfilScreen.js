@@ -13,6 +13,8 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import { Ionicons } from "@expo/vector-icons";
+import { Buffer } from "buffer";
+
 
 export default function PerfilScreen({ route }) {
   const { user } = route.params;
@@ -34,7 +36,7 @@ export default function PerfilScreen({ route }) {
   const [contrasena, setContrasena] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [base64Image, setBase64Image] = useState();
+  //const [base64Image, setBase64Image] = useState();
 
   const handleChangePhoto = async () => {
     try {
@@ -60,12 +62,20 @@ export default function PerfilScreen({ route }) {
 
       if (result.assets && result.assets.length > 0) {
         const fileUri = result.assets[0].uri;
-        const base64Image = await FileSystem.readAsStringAsync(fileUri, {
-          encoding: FileSystem.EncodingType.Base64,
-        });
+        const base64ImageChangePhoto = await FileSystem.readAsStringAsync(
+          fileUri,
+          {
+            encoding: FileSystem.EncodingType.Base64,
+          }
+        );
 
-        setProfilePic(base64Image);
-        console.log("Se cargó imagen: ", base64Image.slice(0, 100), "...");
+        setProfilePic(`data:image/jpeg;base64,${base64ImageChangePhoto}`);
+
+        console.log(
+          "Se cargó imagen: ",
+          base64ImageChangePhoto.slice(0, 100),
+          "..."
+        );
       }
     } catch (error) {
       console.error("Error al seleccionar la imagen:", error);
@@ -88,7 +98,8 @@ export default function PerfilScreen({ route }) {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Datos recibidos del servidor:", data);
+        //console.log("Datos recibidos del servidor:", data);
+        console.log("fetch foto" + data.foto); //para confirmar el formato.
         const fechaNacimientoMySQL = new Date(data.fechaNacimiento)
           .toISOString()
           .slice(0, 10); // Obtiene solo 'YYYY-MM-DD'
@@ -106,18 +117,16 @@ export default function PerfilScreen({ route }) {
         setContrasena(data.contrasena || "");
 
         if (data.foto) {
-          // Verifica si la foto es un Buffer o ya está en formato Base64
-          if (data.foto.type === "Buffer") {
-            console.log("Entró a lectura Buffer");
-            // Convierte Buffer a Base64
-            const base64Image = `data:image/jpeg;base64,${Buffer.from(
+           
+          if (typeof data.foto === "string") {
+            // La imagen ya está en Base64
+            setProfilePic(`data:image/jpeg;base64,${data.foto}`);
+          } else if (data.foto.type === "Buffer" || data.foto.data) {
+            // Convertir Buffer a Base64
+            const base64ImageFetch = `data:image/jpeg;base64,${Buffer.from(
               data.foto.data
             ).toString("base64")}`;
-            setProfilePic(base64Image);
-          } else if (typeof data.foto === "string") {
-            // Ya está en formato Base64
-            console.log("Entró a lectura string");
-            setProfilePic(`data:image/jpeg;base64,${data.foto}`);
+            setProfilePic(base64ImageFetch);
           } else {
             console.warn("Formato de imagen no reconocido.");
             setProfilePic("https://via.placeholder.com/150");
@@ -126,6 +135,7 @@ export default function PerfilScreen({ route }) {
           console.warn("No se recibió una foto del servidor.");
           setProfilePic("https://via.placeholder.com/150");
         }
+
       }
     } catch (error) {
       console.error("Error:", error);
@@ -147,9 +157,27 @@ export default function PerfilScreen({ route }) {
 
   const handleSave = async () => {
     try {
-      // Enviar solo el contenido base64 al backend
-      const photoPayload = base64Image;
+      //Validaciones
+      // if (isNaN(peso) || peso <= 0) {
+      //   Alert.alert("Error", "El peso debe ser un número positivo.");
+      //   return;
+      // }
+      // if (isNaN(altura) || altura <= 0) {
+      //   Alert.alert("Error", "La altura debe ser un número positivo.");
+      //   return;
+      // }
+      const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!isValidEmail) {
+        Alert.alert("Error", "Por favor ingresa un correo electrónico válido.");
+        return;
+      }
+  
 
+      // Enviar solo el contenido base64 al backend
+       const formattedPhoto = profilePic
+         ? profilePic.split(",")[1] // Elimina el prefijo Base64 si existe
+         : null;
+        console.log("formattedPhoto al grabar:" + formattedPhoto);
       const response = await fetch(
         `https://appgym-production.up.railway.app/personas/${user.idPersona}`,
         {
@@ -169,7 +197,7 @@ export default function PerfilScreen({ route }) {
             direccion: direccion,
             telefono: phone,
             contrasena: contrasena,
-            foto: photoPayload,
+            foto: formattedPhoto, // Solo el contenido Base64
           }),
         }
       );
