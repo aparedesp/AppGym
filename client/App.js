@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Alert } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -12,9 +13,10 @@ import EquipateScreen from "./screens/EquipateScreen";
 import ChatScreen from "./screens/ChatScreen";
 //import PagosScreen from "./screens/PagosScreen";
 import PerfilScreen from "./screens/PerfilScreen";
-
+import RegistroScreen from "./screens/RegistroScreen";
 
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -43,7 +45,15 @@ export default function App() {
   return (
     <NavigationContainer>
       {!isAuthenticated ? (
-        <LoginScreen onLogin={handleLogin} />
+        <Stack.Navigator>
+          <Stack.Screen
+            name="LoginScreen"
+            component={(props) => (
+              <LoginScreen {...props} onLogin={handleLogin} />
+            )}
+          />
+          <Stack.Screen name="RegistroScreen" component={RegistroScreen} />
+        </Stack.Navigator>
       ) : (
         <Drawer.Navigator initialRouteName="Inicio">
           <Drawer.Screen

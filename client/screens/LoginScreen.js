@@ -8,8 +8,9 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
-export default function LoginScreen({ onLogin }) {
+export default function LoginScreen({ onLogin, navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -122,5 +123,18 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
+  },
+  registerButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#007bff",
+    borderRadius: 8,
+  },
+  registerText: {
+    color: "#fff",
+    fontSize: 16,
+    marginLeft: 8,
   },
 });
