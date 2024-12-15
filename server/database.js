@@ -87,10 +87,11 @@ export async function insertPersona(
       .toISOString()
       .slice(0, 10); // Obtiene solo 'YYYY-MM-DD'
     const [result] = await pool.query(
-      `INSERT INTO persona (nombre,apellidos,email,docidentidad,peso,
+      `INSERT INTO persona (idRol,nombre,apellidos,email,docidentidad,peso,
       altura,fechaNacimiento,sexo,direccion,telefono,contrasena,estadoLogueo,fechaHoraUltimoLogueo,foto) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
+        1, //IdRol:1 -->Alumno
         nombre,
         apellidos,
         email,

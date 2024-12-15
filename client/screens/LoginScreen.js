@@ -68,6 +68,15 @@ export default function LoginScreen({ onLogin }) {
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Iniciar Sesión</Text>
         </TouchableOpacity>
+
+        {/* Botón para ir al formulario de registro */}
+        <TouchableOpacity
+          style={styles.registerButton}
+          onPress={() => navigation.navigate("RegistroScreen")}
+        >
+          <Ionicons name="person-add" size={24} color="#fff" />
+          <Text style={styles.registerText}>Regístrate</Text>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
