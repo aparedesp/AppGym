@@ -12,7 +12,7 @@ import {
   testConnection
 } from "./database.js"; //Importamos métodos de database.js
 import cors from "cors"; //MidleWare, para que el backend pueda ser llamado desde el frontEnd.
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
 // Lista blanca de IPs o dominios permitidos
 const whitelist = [
