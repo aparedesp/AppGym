@@ -99,10 +99,13 @@ export default function TipoClaseScreen({ route }) {
           key={usuario.idPersona}
           onPress={() => setSelectedIdPersona(usuario.idPersona)}
           style={[
+            styles.itemOption,
             selectedIdPersona === usuario.idPersona && styles.selectedOption,
           ]}
         >
-          <Text>{`${usuario.nombreUsuario}`}</Text>
+          <Text style={styles.itemText}>
+            {usuario.nombre + " " + usuario.apellidos}
+          </Text>
         </TouchableOpacity>
       ))}
 
@@ -113,11 +116,12 @@ export default function TipoClaseScreen({ route }) {
           key={tipoClase.idTipoClase}
           onPress={() => setSelectedIdTipoClase(tipoClase.idTipoClase)}
           style={[
+            styles.itemOption,
             selectedIdTipoClase === tipoClase.idTipoClase &&
               styles.selectedOption,
           ]}
         >
-          <Text>{tipoClase.descripcion}</Text>
+          <Text style={styles.itemText}>{tipoClase.descripcion}</Text>
         </TouchableOpacity>
       ))}
 
@@ -140,36 +144,36 @@ export default function TipoClaseScreen({ route }) {
 const styles = StyleSheet.create({
   content: {
     padding: 16,
-    backgroundColor: "#1c1e21",
+    backgroundColor: "#121212", // Fondo oscuro pero no completamente negro
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#ffffff", // Texto blanco para contraste
     textAlign: "center",
     marginVertical: 20,
   },
   label: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#ccc",
+    color: "#b0b0b0", // Texto gris claro para mejor contraste
     marginTop: 10,
   },
   selectedOption: {
-    backgroundColor: "#3eaf7c",
+    backgroundColor: "#4caf50", // Verde brillante para los seleccionados
     padding: 15,
     marginVertical: 5,
     borderRadius: 8,
   },
   input: {
-    backgroundColor: "#2c2f32",
+    backgroundColor: "#1e1e1e", // Fondo gris oscuro
     padding: 10,
-    color: "#fff",
+    color: "#e0e0e0", // Texto gris claro
     marginBottom: 10,
     borderRadius: 8,
   },
   submitButton: {
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#007bff", // Azul brillante para el botón
     padding: 15,
     borderRadius: 8,
     alignItems: "center",
@@ -178,6 +182,16 @@ const styles = StyleSheet.create({
   submitText: {
     fontWeight: "bold",
     fontSize: 20,
-    color: "#fff",
+    color: "#ffffff", // Texto blanco para contraste
+  },
+  itemOption: {
+    backgroundColor: "#292929", // Fondo más claro para los ítems no seleccionados
+    padding: 15,
+    marginVertical: 5,
+    borderRadius: 8,
+  },
+  itemText: {
+    color: "#e0e0e0", // Texto gris claro
   },
 });
+

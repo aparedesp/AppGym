@@ -58,7 +58,7 @@ export async function getPersonaByID(id) {
 
 export async function getPersonas() {
   try {
-    const [result] = await pool.query(`SELECT * FROM persona`);
+    const [result] = await pool.query(`SELECT * FROM persona order by nombre, apellidos`);
     return result;
   } catch (error) {
     console.error("Error fetching personas:", error);
