@@ -114,6 +114,7 @@ CREATE TABLE `personaTipoClase` (
 `idPersonaTipoClase` int(11) NOT NULL AUTO_INCREMENT,
 `IdPersona` int(11) NOT NULL,
 `idTipoClase` int(11) NOT NULL,
+UNIQUE (IdPersona, idTipoClase)
 PRIMARY KEY (`idPersonaTipoClase`),
 FOREIGN KEY (`IdPersona`) REFERENCES `persona`(`idPersona`),
 FOREIGN KEY (`idTipoClase`) REFERENCES `tipoClase`(`idTipoClase`)
