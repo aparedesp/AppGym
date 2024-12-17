@@ -233,3 +233,29 @@ export async function borrarReserva(idReserva) {
     throw error;
   }
 }
+
+export async function getTipoClase() {
+  try {
+    const [row] = await pool.query(`SELECT * FROM tipoClase `);
+    return row[0];
+  } catch (error) {
+    console.error("Error fetching get tipoClase :", error);
+    throw error;
+  }
+}
+
+
+export async function insertPersonaTipoClase(idPersona, idTipoClase) {
+  try {
+    const [result] = await pool.query(
+      `INSERT INTO personaTipoClase (idPersona,idTipoClase) 
+    VALUES (?, ?)`,
+      [idPersona, idTipoClase]
+    );
+    const idPersonaTipoClase = result.insertId;
+    return getPersonaByID(idPersonaTipoClase);
+  } catch (error) {
+    console.error("Error insert personaTipoClase:", error);
+    throw error;
+  }
+}

@@ -11,9 +11,10 @@ import ReservaScreen from "./screens/ReservaScreen2";
 import AtletasScreen from "./screens/AtletasScreen";
 import EquipateScreen from "./screens/EquipateScreen";
 import ChatScreen from "./screens/ChatScreen";
-//import PagosScreen from "./screens/PagosScreen";
+import PagosScreen from "./screens/PagosScreen";
 import PerfilScreen from "./screens/PerfilScreen";
 import RegistroScreen from "./screens/RegistroScreen";
+import TipoClaseScreen from "./screens/TipoClaseScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -89,7 +90,7 @@ export default function App() {
           />
           <Drawer.Screen
             name="Pagos"
-            component={ChatScreen}
+            component={PagosScreen}
             options={{
               drawerIcon: ({ color, size }) => (
                 <MaterialIcons name="payment" color={color} size={size} />
@@ -125,6 +126,16 @@ export default function App() {
                 <MaterialIcons name="emoji-events" color={color} size={size} />
               ),
               headerTitle: `Atletas | ${user.nombre}`,
+            }}
+          />
+          <Drawer.Screen
+            name="TipoClase"
+            component={TipoClaseScreen}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <MaterialIcons name="emoji-events" color={color} size={size} />
+              ),
+              headerTitle: `Tipo Clase | ${user.nombre}`,
             }}
           />
           <Drawer.Screen

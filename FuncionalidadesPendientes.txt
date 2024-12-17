@@ -1,0 +1,3 @@
+1.-Crear/Eliminar (tabla personaTipoClase)
+2.-Crear/Eliminar cupos a clases(tabla reserva)
+3.-Nueva tabla perfiles/permisos

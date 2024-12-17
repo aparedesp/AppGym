@@ -330,8 +330,8 @@ export default function ReservaScreen2({ route }) {
                 <View key={i} style={[styles.cuadroAlumno, estiloAlumno]}>
                   <Text style={styles.textoAlumno}>
                     {alumno.nombre
-                      ? `${alumno.idReserva} | ${alumno.idPersona} ${alumno.nombre} ${alumno.apellidos}`
-                      : `${alumno.idReserva}` + " | Disponible: "}
+                      ? `${alumno.nombre} ${alumno.apellidos}`
+                      : " Disponible "}
                   </Text>
                 </View>
               );

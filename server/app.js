@@ -9,7 +9,8 @@ import {
   getCalendarioPersona,
   reservar,
   borrarReserva,
-  testConnection
+  testConnection,
+  insertPersonaTipoClase
 } from "./database.js"; //Importamos métodos de database.js
 import cors from "cors"; //MidleWare, para que el backend pueda ser llamado desde el frontEnd.
 import nodemailer from "nodemailer";
@@ -203,3 +204,14 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
+app.get("/tipoClase", async (req, res) => {
+  const tipoclases = await getTipoClase();
+  res.status(200).send(tipoclases);
+});
+
+
+app.post("/personaTipoClase", async (req, res) => {
+  const {idPersona,idTipoClase} = req.body;
+  const personaTipoClase = await insertPersonaTipoClase(idPersona, idTipoClase);
+  res.status(201).send(personaTipoClase);
+});
