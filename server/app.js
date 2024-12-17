@@ -1,16 +1,17 @@
 import express from "express";
 import {
+  testConnection,
+  getPersonaLogin,
   getPersonaByID,
+  getPersonas,
   insertPersona,
   updatePersona,
   deletePersona,
-  getPersonas,
-  getPersonaLogin,
+  getTipoClase,
+  insertPersonaTipoClase,
   getCalendarioPersona,
   reservar,
   borrarReserva,
-  testConnection,
-  insertPersonaTipoClase
 } from "./database.js"; //Importamos métodos de database.js
 import cors from "cors"; //MidleWare, para que el backend pueda ser llamado desde el frontEnd.
 import nodemailer from "nodemailer";

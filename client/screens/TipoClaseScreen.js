@@ -11,7 +11,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function TipoClaseScreen({ route }) {
-
+  const { user } = route.params;
   const [tiposClases, setTiposClases] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [selectedIdPersona, setSelectedIdPersona] = useState("");

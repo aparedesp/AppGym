@@ -177,6 +177,31 @@ export async function deletePersona(id) {
   }
 }
 
+export async function getTipoClase() {
+  try {
+    const [result] = await pool.query(`SELECT * FROM tipoClase `);
+    return result;
+  } catch (error) {
+    console.error("Error fetching get tipoClase :", error);
+    throw error;
+  }
+}
+
+export async function insertPersonaTipoClase(idPersona, idTipoClase) {
+  try {
+    const [result] = await pool.query(
+      `INSERT INTO personaTipoClase (idPersona,idTipoClase) 
+    VALUES (?, ?)`,
+      [idPersona, idTipoClase]
+    );
+    const idPersonaTipoClase = result.insertId;
+    return getPersonaByID(idPersonaTipoClase);
+  } catch (error) {
+    console.error("Error insert personaTipoClase:", error);
+    throw error;
+  }
+}
+
 export async function getCalendarioPersona(idPersona, fechaHora) {
   try {
     const [result] = await pool.query(
@@ -234,28 +259,3 @@ export async function borrarReserva(idReserva) {
   }
 }
 
-export async function getTipoClase() {
-  try {
-    const [result] = await pool.query(`SELECT * FROM tipoClase `);
-    return result;
-  } catch (error) {
-    console.error("Error fetching get tipoClase :", error);
-    throw error;
-  }
-}
-
-
-export async function insertPersonaTipoClase(idPersona, idTipoClase) {
-  try {
-    const [result] = await pool.query(
-      `INSERT INTO personaTipoClase (idPersona,idTipoClase) 
-    VALUES (?, ?)`,
-      [idPersona, idTipoClase]
-    );
-    const idPersonaTipoClase = result.insertId;
-    return getPersonaByID(idPersonaTipoClase);
-  } catch (error) {
-    console.error("Error insert personaTipoClase:", error);
-    throw error;
-  }
-}

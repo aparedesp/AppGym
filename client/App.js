@@ -131,6 +131,7 @@ export default function App() {
           <Drawer.Screen
             name="TipoClase"
             component={TipoClaseScreen}
+            initialParams={{ user }} // Envía los parámetros necesarios
             options={{
               drawerIcon: ({ color, size }) => (
                 <MaterialIcons name="emoji-events" color={color} size={size} />
