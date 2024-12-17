@@ -236,8 +236,8 @@ export async function borrarReserva(idReserva) {
 
 export async function getTipoClase() {
   try {
-    const [row] = await pool.query(`SELECT * FROM tipoClase `);
-    return row[0];
+    const [result] = await pool.query(`SELECT * FROM tipoClase `);
+    return result;
   } catch (error) {
     console.error("Error fetching get tipoClase :", error);
     throw error;
