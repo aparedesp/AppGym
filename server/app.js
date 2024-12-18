@@ -210,6 +210,10 @@ app.get("/tipoClase", async (req, res) => {
   res.status(200).send(tipoclases);
 });
 
+app.get("/personaTipoClase/:id", async (req, res) => {
+  const personas = await getTipoClaseByIdPersona(req.params.id);
+  res.status(200).send(personas);
+});
 
 app.post("/personaTipoClase", async (req, res) => {
   const {idPersona,idTipoClase} = req.body;

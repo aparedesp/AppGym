@@ -11,13 +11,32 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function TipoClaseScreen({ route }) {
-  const { user } = route.params;
+
+  const [Personas, setPersonas] = useState([]);
+  const [filteredPersonas, setFilteredPersonas] = useState([]);
+  const [selectedPersona, setSelectedPersona] = useState(null);
   const [tiposClases, setTiposClases] = useState([]);
-  const [usuarios, setUsuarios] = useState([]);
-  const [selectedIdPersona, setSelectedIdPersona] = useState("");
+  const [asignados, setAsignados] = useState([]);
   const [selectedIdTipoClase, setSelectedIdTipoClase] = useState("");
-  const [filterUser, setFilterUser] = useState("");
-  const [registros, setRegistros] = useState([]);
+  const [searchText, setSearchText] = useState("");
+
+  // Obtener Personas desde el backend
+  const fetchPersonas = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `https://appgym-production.up.railway.app/personas/`
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setPersonas(data);
+        setFilteredPersonas(data);
+      } else {
+        Alert.alert("Error", "No se pudieron cargar los Personas.");
+      }
+    } catch (error) {
+      console.error("Error al obtener Personas:", error);
+    }
+  }, []);
 
   // Obtener tipos de clase desde el backend
   const fetchTipoClases = useCallback(async () => {
@@ -36,162 +55,209 @@ export default function TipoClaseScreen({ route }) {
     }
   }, []);
 
-  // Obtener usuarios desde el backend
-  const fetchUsuarios = useCallback(async () => {
+  // Obtener clases asignadas de una persona
+  const fetchAsignados = async (idPersona) => {
     try {
       const response = await fetch(
-        `https://appgym-production.up.railway.app/personas/`
+        `https://appgym-production.up.railway.app/personaTipoClase/${idPersona}`
       );
       const data = await response.json();
       if (response.ok) {
-        setUsuarios(data);
+        setAsignados(data);
       } else {
-        Alert.alert("Error", "No se pudieron cargar los usuarios.");
+        Alert.alert("Error", "No se pudieron cargar las clases asignadas.");
       }
     } catch (error) {
-      console.error("Error al obtener usuarios:", error);
+      console.error("Error al obtener clases asignadas:", error);
     }
-  }, []);
+  };
 
-  // Confirmar la selección del tipo de clase y usuario
-  const handleSubmit = async () => {
-    if (!selectedIdPersona || !selectedIdTipoClase) {
-      Alert.alert("Error", "Debe seleccionar un usuario y un tipo de clase.");
+  // Filtrar Personas al escribir
+  const handleSearch = (text) => {
+    setSearchText(text);
+    if (text) {
+      const filtered = Personas.filter(
+        (Persona) =>
+          Persona.nombre.toLowerCase().includes(text.toLowerCase()) ||
+          Persona.docIdentidad.toLowerCase().includes(text.toLowerCase())
+      );
+      setFilteredPersonas(filtered);
+    } else {
+      setFilteredPersonas(Personas);
+    }
+  };
+
+  // Asignar un tipo de clase
+  const handleAsignar = async () => {
+    if (!selectedPersona || !selectedIdTipoClase) {
+      Alert.alert("Error", "Seleccione un Persona y un tipo de clase.");
       return;
     }
     try {
       const response = await fetch(
-        "https://appgym-production.up.railway.app/personaTipoClase",
+        `https://appgym-production.up.railway.app/personaTipoClase`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            idPersona: selectedIdPersona,
+            idPersona: selectedPersona.idPersona,
             idTipoClase: selectedIdTipoClase,
           }),
         }
       );
-
       if (response.ok) {
-        Alert.alert("Éxito", "Asignación creada correctamente.");
-        fetchUsuarios(); // Actualizar usuarios después de la asignación
+        Alert.alert("Éxito", "Clase asignada correctamente.");
+        fetchAsignados(selectedPersona.idPersona);
+      } else {
+        Alert.alert("Error", "No se pudo asignar la clase.");
       }
     } catch (error) {
       console.error("Error al asignar clase:", error);
     }
   };
 
+  // Eliminar un tipo de clase asignado
+  const handleEliminar = async (idPersonaTipoClase) => {
+    try {
+      const response = await fetch(
+        `https://appgym-production.up.railway.app/personaTipoClase/${idPersonaTipoClase}`,
+        { method: "DELETE" }
+      );
+      if (response.ok) {
+        Alert.alert("Éxito", "Clase eliminada correctamente.");
+        fetchAsignados(selectedPersona.idPersona);
+      } else {
+        Alert.alert("Error", "No se pudo eliminar la clase.");
+      }
+    } catch (error) {
+      console.error("Error al eliminar clase:", error);
+    }
+  };
+
   useFocusEffect(
     useCallback(() => {
+      fetchPersonas();
       fetchTipoClases();
-      fetchUsuarios();
     }, [])
   );
 
   return (
-    <ScrollView contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Asignación de Clase</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.title}>Gestión de Clases</Text>
 
-      {/* Selección de Usuario */}
-      <Text style={styles.label}>Seleccionar Usuario</Text>
-      {usuarios.map((usuario) => (
+      {/* Búsqueda y selección de Persona */}
+      <TextInput
+        placeholder="Buscar por nombre o documento"
+        value={searchText}
+        onChangeText={handleSearch}
+        style={styles.input}
+      />
+      {filteredPersonas.map((Persona) => (
         <TouchableOpacity
-          key={usuario.idPersona}
-          onPress={() => setSelectedIdPersona(usuario.idPersona)}
+          key={Persona.idPersona}
+          onPress={() => {
+            setSelectedPersona(Persona);
+            fetchAsignados(Persona.idPersona);
+          }}
           style={[
-            styles.itemOption,
-            selectedIdPersona === usuario.idPersona && styles.selectedOption,
+            styles.item,
+            selectedPersona?.idPersona === Persona.idPersona && styles.selected,
           ]}
         >
           <Text style={styles.itemText}>
-            {usuario.nombre + " " + usuario.apellidos}
+            {Persona.nombre} - {Persona.docidentidad}
           </Text>
         </TouchableOpacity>
       ))}
 
-      {/* Selección del Tipo de Clase */}
-      <Text style={styles.label}>Seleccionar Tipo de Clase</Text>
-      {tiposClases.map((tipoClase) => (
-        <TouchableOpacity
-          key={tipoClase.idTipoClase}
-          onPress={() => setSelectedIdTipoClase(tipoClase.idTipoClase)}
-          style={[
-            styles.itemOption,
-            selectedIdTipoClase === tipoClase.idTipoClase &&
-              styles.selectedOption,
-          ]}
-        >
-          <Text style={styles.itemText}>{tipoClase.descripcion}</Text>
-        </TouchableOpacity>
-      ))}
+      {/* Clases asignadas */}
+      {selectedPersona && (
+        <View>
+          <Text style={styles.subtitle}>Clases asignadas:</Text>
+          {asignados.map((asignado) => (
+            <View key={asignado.idPersonaTipoClase} style={styles.row}>
+              <Text style={styles.itemText}>{asignado.descripcion}</Text>
+              <TouchableOpacity
+                onPress={() => handleEliminar(asignado.idPersonaTipoClase)}
+              >
+                <Text style={styles.deleteButton}>Eliminar</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
+      )}
 
-      {/* Botón para guardar la asignación */}
-      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-        <Text style={styles.submitText}>Guardar</Text>
-      </TouchableOpacity>
-
-      {/* Filtros */}
-      <TextInput
-        placeholder="Buscar Usuario"
-        value={filterUser}
-        onChangeText={(text) => setFilterUser(text)}
-        style={styles.input}
-      />
+      {/* Asignar nueva clase */}
+      {selectedPersona && (
+        <View>
+          <Text style={styles.subtitle}>Asignar nueva clase:</Text>
+          <TextInput
+            placeholder="Seleccione un tipo de clase"
+            value={selectedIdTipoClase}
+            onChangeText={setSelectedIdTipoClase}
+            style={styles.input}
+          />
+          <TouchableOpacity style={styles.button} onPress={handleAsignar}>
+            <Text style={styles.buttonText}>Asignar</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  content: {
-    padding: 16,
-    backgroundColor: "#121212", // Fondo oscuro pero no completamente negro
+  container: {
+    padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "bold",
-    color: "#ffffff", // Texto blanco para contraste
-    textAlign: "center",
-    marginVertical: 20,
-  },
-  label: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#b0b0b0", // Texto gris claro para mejor contraste
-    marginTop: 10,
-  },
-  selectedOption: {
-    backgroundColor: "#4caf50", // Verde brillante para los seleccionados
-    padding: 15,
-    marginVertical: 5,
-    borderRadius: 8,
+    marginBottom: 20,
   },
   input: {
-    backgroundColor: "#1e1e1e", // Fondo gris oscuro
-    padding: 10,
-    color: "#e0e0e0", // Texto gris claro
     marginBottom: 10,
-    borderRadius: 8,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 5,
   },
-  submitButton: {
-    backgroundColor: "#007bff", // Azul brillante para el botón
-    padding: 15,
-    borderRadius: 8,
-    alignItems: "center",
-    marginTop: 20,
+  item: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
   },
-  submitText: {
-    fontWeight: "bold",
-    fontSize: 20,
-    color: "#ffffff", // Texto blanco para contraste
-  },
-  itemOption: {
-    backgroundColor: "#292929", // Fondo más claro para los ítems no seleccionados
-    padding: 15,
-    marginVertical: 5,
-    borderRadius: 8,
+  selected: {
+    backgroundColor: "#ddd",
   },
   itemText: {
-    color: "#e0e0e0", // Texto gris claro
+    fontSize: 16,
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
+  deleteButton: {
+    color: "red",
+  },
+  button: {
+    backgroundColor: "#007bff",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
   },
 });
-
