@@ -159,6 +159,23 @@ app.delete("/personas/:id", async (req, res) => {
   res.send({ message: "Persona eliminada correctamente" });
 });
 
+app.get("/tipoClase", async (req, res) => {
+  const tipoclases = await getTipoClase();
+  res.status(200).send(tipoclases);
+});
+
+app.get("/personaTipoClase/:id", async (req, res) => {
+  const personas = await getTipoClaseByIdPersona(req.params.id);
+  res.status(200).send(personas);
+});
+
+app.post("/personaTipoClase", async (req, res) => {
+  const { idPersona, idTipoClase } = req.body;
+  const personaTipoClase = await insertPersonaTipoClase(idPersona, idTipoClase);
+  res.status(201).send(personaTipoClase);
+});
+
+
 app.put("/reservar", async (req, res) => {
   const { idPersona, idReserva } = req.body;
   const reserva = await reservar(idPersona, idReserva);
@@ -206,18 +223,3 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
-app.get("/tipoClase", async (req, res) => {
-  const tipoclases = await getTipoClase();
-  res.status(200).send(tipoclases);
-});
-
-app.get("/personaTipoClase/:id", async (req, res) => {
-  const personas = await getTipoClaseByIdPersona(req.params.id);
-  res.status(200).send(personas);
-});
-
-app.post("/personaTipoClase", async (req, res) => {
-  const {idPersona,idTipoClase} = req.body;
-  const personaTipoClase = await insertPersonaTipoClase(idPersona, idTipoClase);
-  res.status(201).send(personaTipoClase);
-});

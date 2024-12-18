@@ -58,6 +58,7 @@ export default function TipoClaseScreen({ route }) {
   // Obtener clases asignadas de una persona
   const fetchAsignados = async (idPersona) => {
     try {
+      console.log("fetchAsignados/IdPersona:" + idPersona);
       const response = await fetch(
         `https://appgym-production.up.railway.app/personaTipoClase/${idPersona}`
       );
