@@ -77,19 +77,24 @@ const fetchAsignados = async (idPersona) => {
 
 
   // Filtrar Personas al escribir
-  const handleSearch = (text) => {
-    setSearchText(text);
-    if (text) {
-      const filtered = Personas.filter(
-        (Persona) =>
-          Persona.nombre.toLowerCase().includes(text.toLowerCase()) ||
-          Persona.docIdentidad.toLowerCase().includes(text.toLowerCase())
-      );
-      setFilteredPersonas(filtered);
-    } else {
-      setFilteredPersonas(Personas);
-    }
-  };
+const handleSearch = (text) => {
+  setSearchText(text);
+  if (text) {
+    const filtered = Personas.filter(
+      (Persona) =>
+        (Persona.nombre &&
+          Persona.nombre.toLowerCase().includes(text.toLowerCase())) ||
+        (Persona.apellidos &&
+          Persona.apellidos.toLowerCase().includes(text.toLowerCase())) ||
+        (Persona.docidentidad &&
+          Persona.docidentidad.toLowerCase().includes(text.toLowerCase()))
+    );
+    setFilteredPersonas(filtered);
+  } else {
+    setFilteredPersonas(Personas);
+  }
+};
+
 
   // Asignar un tipo de clase
   const handleAsignar = async () => {
@@ -169,7 +174,7 @@ const fetchAsignados = async (idPersona) => {
           ]}
         >
           <Text style={styles.itemText}>
-            {Persona.nombre} - {Persona.docidentidad}
+            {Persona.nombre} {Persona.apellidos} - {Persona.docidentidad}
           </Text>
         </TouchableOpacity>
       ))}
