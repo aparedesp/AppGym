@@ -187,6 +187,26 @@ export async function getTipoClase() {
   }
 }
 
+export async function getTipoClaseByIdPersona(id) {
+  try {
+    const [row] = await pool.query(
+      `select ptc.idPersonaTipoClase, 
+        tc.descripcion ,
+        ptc.idTipoClase,
+        ptc.idPersona
+        from personaTipoClase ptc
+        join persona p on p.idPersona=ptc.idPersona
+        join tipoClase tc on tc.idTipoClase=ptc.idTipoClase
+        where p.idPersona = ?`,
+      [id]
+    );
+    return row[0];
+  } catch (error) {
+    console.error("Error fetching get TipoClase By Id Persona:", error);
+    throw error;
+  }
+}
+
 export async function insertPersonaTipoClase(idPersona, idTipoClase) {
   try {
     const [result] = await pool.query(
@@ -260,22 +280,4 @@ export async function borrarReserva(idReserva) {
 }
 
 
-export async function getTipoClaseByIdPersona(id) {
-  try {
-    const [row] = await pool.query(
-      `select ptc.idPersonaTipoClase, 
-        tc.descripcion ,
-        ptc.idTipoClase,
-        ptc.idPersona
-        from personaTipoClase ptc
-        join persona p on p.idPersona=ptc.idPersona
-        join tipoClase tc on tc.idTipoClase=ptc.idTipoClase
-        where p.idPersona = ?`,
-      [id]
-    );
-    return row[0];
-  } catch (error) {
-    console.error("Error fetching get TipoClase By Id Persona:", error);
-    throw error;
-  }
-}
+
