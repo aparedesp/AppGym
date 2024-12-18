@@ -56,22 +56,25 @@ export default function TipoClaseScreen({ route }) {
   }, []);
 
   // Obtener clases asignadas de una persona
-  const fetchAsignados = async (idPersona) => {
-    try {
-      console.log("fetchAsignados/IdPersona:" + idPersona);
-      const response = await fetch(
-        `https://appgym-production.up.railway.app/personaTipoClase/${idPersona}`
-      );
-      const data = await response.json();
-      if (response.ok) {
-        setAsignados(data);
-      } else {
-        Alert.alert("Error", "No se pudieron cargar las clases asignadas.");
-      }
-    } catch (error) {
-      console.error("Error al obtener clases asignadas:", error);
+const fetchAsignados = async (idPersona) => {
+  try {
+    console.log("fetchAsignados/IdPersona:" + idPersona);
+    const response = await fetch(
+      `https://appgym-production.up.railway.app/personaTipoClase/${idPersona}`
+    );
+    const data = await response.json();
+    if (response.ok) {
+      setAsignados(Array.isArray(data) ? data : []);
+    } else {
+      Alert.alert("Error", "No se pudieron cargar las clases asignadas.");
+      setAsignados([]);
     }
-  };
+  } catch (error) {
+    console.error("Error al obtener clases asignadas:", error);
+    setAsignados([]);
+  }
+};
+
 
   // Filtrar Personas al escribir
   const handleSearch = (text) => {
@@ -175,16 +178,17 @@ export default function TipoClaseScreen({ route }) {
       {selectedPersona && (
         <View>
           <Text style={styles.subtitle}>Clases asignadas:</Text>
-          {asignados.map((asignado) => (
-            <View key={asignado.idPersonaTipoClase} style={styles.row}>
-              <Text style={styles.itemText}>{asignado.descripcion}</Text>
-              <TouchableOpacity
-                onPress={() => handleEliminar(asignado.idPersonaTipoClase)}
-              >
-                <Text style={styles.deleteButton}>Eliminar</Text>
-              </TouchableOpacity>
-            </View>
-          ))}
+          {Array.isArray(asignados) &&
+            asignados.map((asignado) => (
+              <View key={asignado.idPersonaTipoClase} style={styles.row}>
+                <Text style={styles.itemText}>{asignado.descripcion}</Text>
+                <TouchableOpacity
+                  onPress={() => handleEliminar(asignado.idPersonaTipoClase)}
+                >
+                  <Text style={styles.deleteButton}>Eliminar</Text>
+                </TouchableOpacity>
+              </View>
+            ))}
         </View>
       )}
 

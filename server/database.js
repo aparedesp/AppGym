@@ -189,7 +189,7 @@ export async function getTipoClase() {
 
 export async function getTipoClaseByIdPersona(id) {
   try {
-    const [row] = await pool.query(
+    const [result] = await pool.query(
       `select ptc.idPersonaTipoClase, 
         tc.descripcion ,
         ptc.idTipoClase,
@@ -200,7 +200,7 @@ export async function getTipoClaseByIdPersona(id) {
         where p.idPersona = ?`,
       [id]
     );
-    return row[0];
+    return result;
   } catch (error) {
     console.error("Error fetching get TipoClase By Id Persona:", error);
     throw error;
