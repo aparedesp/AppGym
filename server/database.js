@@ -222,11 +222,11 @@ export async function insertPersonaTipoClase(idPersona, idTipoClase) {
   }
 }
 
-export async function deletePersonaTipoClase(idTipoClase) {
+export async function deletePersonaTipoClase(idPersonaTipoClase) {
   try {
     const [result] = await pool.query(
-      `DELETE FROM personaTipoClase WHERE idTipoClase = ?`,
-      [idTipoClase]
+      `DELETE FROM personaTipoClase WHERE idPersonaTipoClase = ?`,
+      [idPersonaTipoClase]
     );
     return result;
   } catch (error) {
