@@ -11,7 +11,6 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function TipoClaseScreen({ route }) {
-
   const [Personas, setPersonas] = useState([]);
   const [filteredPersonas, setFilteredPersonas] = useState([]);
   const [selectedPersona, setSelectedPersona] = useState(null);
@@ -57,45 +56,43 @@ export default function TipoClaseScreen({ route }) {
   }, []);
 
   // Obtener clases asignadas de una persona
-const fetchAsignados = async (idPersona) => {
-  try {
-    console.log("fetchAsignados/IdPersona:" + idPersona);
-    const response = await fetch(
-      `https://appgym-production.up.railway.app/personaTipoClase/${idPersona}`
-    );
-    const data = await response.json();
-    if (response.ok) {
-      setAsignados(Array.isArray(data) ? data : []);
-    } else {
-      Alert.alert("Error", "No se pudieron cargar las clases asignadas.");
+  const fetchAsignados = async (idPersona) => {
+    try {
+      console.log("fetchAsignados/IdPersona:" + idPersona);
+      const response = await fetch(
+        `https://appgym-production.up.railway.app/personaTipoClase/${idPersona}`
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setAsignados(Array.isArray(data) ? data : []);
+      } else {
+        Alert.alert("Error", "No se pudieron cargar las clases asignadas.");
+        setAsignados([]);
+      }
+    } catch (error) {
+      console.error("Error al obtener clases asignadas:", error);
       setAsignados([]);
     }
-  } catch (error) {
-    console.error("Error al obtener clases asignadas:", error);
-    setAsignados([]);
-  }
-};
-
+  };
 
   // Filtrar Personas al escribir
-const handleSearch = (text) => {
-  setSearchText(text);
-  if (text) {
-    const filtered = Personas.filter(
-      (Persona) =>
-        (Persona.nombre &&
-          Persona.nombre.toLowerCase().includes(text.toLowerCase())) ||
-        (Persona.apellidos &&
-          Persona.apellidos.toLowerCase().includes(text.toLowerCase())) ||
-        (Persona.docidentidad &&
-          Persona.docidentidad.toLowerCase().includes(text.toLowerCase()))
-    );
-    setFilteredPersonas(filtered);
-  } else {
-    setFilteredPersonas(Personas);
-  }
-};
-
+  const handleSearch = (text) => {
+    setSearchText(text);
+    if (text) {
+      const filtered = Personas.filter(
+        (Persona) =>
+          (Persona.nombre &&
+            Persona.nombre.toLowerCase().includes(text.toLowerCase())) ||
+          (Persona.apellidos &&
+            Persona.apellidos.toLowerCase().includes(text.toLowerCase())) ||
+          (Persona.docidentidad &&
+            Persona.docidentidad.toLowerCase().includes(text.toLowerCase()))
+      );
+      setFilteredPersonas(filtered);
+    } else {
+      setFilteredPersonas(Personas);
+    }
+  };
 
   // Asignar un tipo de clase
   const handleAsignar = async () => {
@@ -153,7 +150,7 @@ const handleSearch = (text) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Gestión de Clases</Text>
+      <Text style={styles.title}>Gestión de Tipo de Clase por persona</Text>
 
       {/* Búsqueda y selección de Persona */}
       <TextInput
@@ -227,10 +224,12 @@ const handleSearch = (text) => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    backgroundColor: "#1c1e21", // Fondo igual al de PagosScreen
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
+    color: "#ffeb3d", // Título en blanco
     marginBottom: 20,
   },
   input: {
@@ -239,6 +238,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
+    color: "#fff", // Color del texto en blanco
+    backgroundColor: "#2a2d31", // Fondo similar al de PagosScreen
   },
   item: {
     padding: 10,
@@ -246,36 +247,40 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
   },
   selected: {
-    backgroundColor: "#ddd",
+    backgroundColor: "#007BFF", // Color seleccionado como en PagosScreen
   },
   itemText: {
     fontSize: 16,
+    color: "#fff", // Texto en blanco
   },
   subtitle: {
     fontSize: 18,
     fontWeight: "bold",
+    color: "#ffeb3d", // Subtítulos en blanco
     marginVertical: 10,
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 10,
+    padding: 9,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
   },
+
   deleteButton: {
-    color: "red",
+    color: "red", // Botón de eliminar en rojo
   },
+
   button: {
-    backgroundColor: "#007bff",
+    backgroundColor: "#007BFF", // Color de fondo del botón igual a PagosScreen
     padding: 10,
     borderRadius: 5,
     alignItems: "center",
     marginTop: 10,
   },
   buttonText: {
-    color: "#fff",
+    color: "#fff", // Texto del botón en blanco
     fontWeight: "bold",
   },
 });

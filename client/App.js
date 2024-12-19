@@ -62,7 +62,7 @@ export default function App() {
               drawerIcon: ({ color, size }) => (
                 <MaterialIcons name="home" color={color} size={size} />
               ),
-              headerTitle: `Bienvenid@, ${user.nombre}`,
+              headerTitle: `Bienvenid@, ${user.nombre} ${user.apellidos}`,
             }}
           />
 
@@ -74,7 +74,7 @@ export default function App() {
               drawerIcon: ({ color, size }) => (
                 <MaterialIcons name="person" color={color} size={size} />
               ),
-              headerTitle: `Perfil | ${user.nombre}`,
+              headerTitle: `Perfil | ${user.nombre} ${user.apellidos}`,
             }}
           />
           <Drawer.Screen
@@ -85,7 +85,7 @@ export default function App() {
               drawerIcon: ({ color, size }) => (
                 <MaterialIcons name="edit-calendar" color={color} size={size} />
               ),
-              headerTitle: `Reservas | ${user.idPersona} ${user.nombre} ${user.apellidos}`,
+              headerTitle: `Reservas | ${user.nombre} ${user.apellidos}`,
             }}
           />
           <Drawer.Screen
@@ -95,7 +95,7 @@ export default function App() {
               drawerIcon: ({ color, size }) => (
                 <MaterialIcons name="payment" color={color} size={size} />
               ),
-              headerTitle: `Pagos | ${user.nombre}`,
+              headerTitle: `Pagos | ${user.nombre} ${user.apellidos}`,
             }}
           />
           <Drawer.Screen
@@ -105,7 +105,7 @@ export default function App() {
               drawerIcon: ({ color, size }) => (
                 <MaterialIcons name="chat" color={color} size={size} />
               ),
-              headerTitle: `Chat | ${user.nombre}`,
+              headerTitle: `Chat | ${user.nombre} ${user.apellidos}`,
             }}
           />
           <Drawer.Screen
@@ -115,7 +115,7 @@ export default function App() {
               drawerIcon: ({ color, size }) => (
                 <MaterialIcons name="store" color={color} size={size} />
               ),
-              headerTitle: `Equípate | ${user.nombre}`,
+              headerTitle: `Equípate | ${user.nombre} ${user.apellidos}`,
             }}
           />
           <Drawer.Screen
@@ -125,7 +125,7 @@ export default function App() {
               drawerIcon: ({ color, size }) => (
                 <MaterialIcons name="emoji-events" color={color} size={size} />
               ),
-              headerTitle: `Atletas | ${user.nombre}`,
+              headerTitle: `Atletas | ${user.nombre} ${user.apellidos}`,
             }}
           />
           <Drawer.Screen
@@ -136,7 +136,7 @@ export default function App() {
               drawerIcon: ({ color, size }) => (
                 <MaterialIcons name="emoji-events" color={color} size={size} />
               ),
-              headerTitle: `Tipo Clase | ${user.nombre}`,
+              headerTitle: `Tipo Clase | ${user.nombre} ${user.apellidos}`,
             }}
           />
           <Drawer.Screen
