@@ -45,6 +45,7 @@ export default function TipoClaseScreen({ route }) {
         `https://appgym-production.up.railway.app/tipoClase/`
       );
       const data = await response.json();
+      console.log("Tipos de clases obtenidos:", data);
       if (response.ok) {
         setTiposClases(data);
       } else {
@@ -201,12 +202,19 @@ const handleSearch = (text) => {
       {selectedPersona && (
         <View>
           <Text style={styles.subtitle}>Asignar nueva clase:</Text>
-          <TextInput
-            placeholder="Seleccione un tipo de clase"
-            value={selectedIdTipoClase}
-            onChangeText={setSelectedIdTipoClase}
-            style={styles.input}
-          />
+          {tiposClases.map((tipoClase) => (
+            <TouchableOpacity
+              key={tipoClase.idTipoClase}
+              style={[
+                styles.item,
+                selectedIdTipoClase === tipoClase.idTipoClase &&
+                  styles.selected,
+              ]}
+              onPress={() => setSelectedIdTipoClase(tipoClase.idTipoClase)}
+            >
+              <Text style={styles.itemText}>{tipoClase.descripcion}</Text>
+            </TouchableOpacity>
+          ))}
           <TouchableOpacity style={styles.button} onPress={handleAsignar}>
             <Text style={styles.buttonText}>Asignar</Text>
           </TouchableOpacity>

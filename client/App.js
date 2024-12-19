@@ -129,7 +129,7 @@ export default function App() {
             }}
           />
           <Drawer.Screen
-            name="TipoClase"
+            name="Tipo Clase"
             component={TipoClaseScreen}
             initialParams={{ user }} // Envía los parámetros necesarios
             options={{

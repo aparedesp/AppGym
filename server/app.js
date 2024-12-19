@@ -13,6 +13,7 @@ import {
   getCalendarioPersona,
   reservar,
   borrarReserva,
+  deletePersonaTipoClase,
 } from "./database.js"; //Importamos métodos de database.js
 import cors from "cors"; //MidleWare, para que el backend pueda ser llamado desde el frontEnd.
 import nodemailer from "nodemailer";
@@ -173,6 +174,11 @@ app.post("/personaTipoClase", async (req, res) => {
   const { idPersona, idTipoClase } = req.body;
   const personaTipoClase = await insertPersonaTipoClase(idPersona, idTipoClase);
   res.status(201).send(personaTipoClase);
+});
+
+app.delete("/personaTipoClase/:id", async (req, res) => {
+  await deletePersonaTipoClase(req.params.id);
+  res.send({ message: "PersonaTipoClase eliminada correctamente" });
 });
 
 

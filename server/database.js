@@ -222,6 +222,19 @@ export async function insertPersonaTipoClase(idPersona, idTipoClase) {
   }
 }
 
+export async function deletePersonaTipoClase(idTipoClase) {
+  try {
+    const [result] = await pool.query(
+      `DELETE FROM personaTipoClase WHERE idTipoClase = ?`,
+      [idTipoClase]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error delete personaTipoClase:", error);
+    throw error;
+  }
+}
+
 export async function getCalendarioPersona(idPersona, fechaHora) {
   try {
     const [result] = await pool.query(
