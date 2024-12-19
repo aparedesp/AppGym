@@ -215,7 +215,7 @@ export async function insertPersonaTipoClase(idPersona, idTipoClase) {
       [idPersona, idTipoClase]
     );
     const idPersonaTipoClase = result.insertId;
-    return getPersonaByID(idPersonaTipoClase);
+    return idPersonaTipoClase;
   } catch (error) {
     console.error("Error insert personaTipoClase:", error);
     throw error;

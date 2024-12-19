@@ -172,8 +172,8 @@ app.get("/personaTipoClase/:id", async (req, res) => {
 
 app.post("/personaTipoClase", async (req, res) => {
   const { idPersona, idTipoClase } = req.body;
-  const personaTipoClase = await insertPersonaTipoClase(idPersona, idTipoClase);
-  res.status(201).send(personaTipoClase);
+  const idPersonaTipoClase = await insertPersonaTipoClase(idPersona, idTipoClase);
+  res.status(201).send(idPersonaTipoClase);
 });
 
 app.delete("/personaTipoClase/:id", async (req, res) => {
