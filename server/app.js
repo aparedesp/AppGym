@@ -173,7 +173,7 @@ app.get("/personaTipoClase/:id", async (req, res) => {
 app.post("/personaTipoClase", async (req, res) => {
   const { idPersona, idTipoClase } = req.body;
   const idPersonaTipoClase = await insertPersonaTipoClase(idPersona, idTipoClase);
-  res.status(201).send(idPersonaTipoClase);
+  res.status(201).send({ message: "PersonaTipoClase registrada correctamente" });
 });
 
 app.delete("/personaTipoClase/:id", async (req, res) => {
