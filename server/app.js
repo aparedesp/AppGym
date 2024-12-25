@@ -8,6 +8,8 @@ import {
   updatePersona,
   deletePersona,
   getTipoClase,
+  insertTipoClase,
+  deleteTipoClase,
   getTipoClaseByIdPersona,
   insertPersonaTipoClase,
   getCalendarioPersona,

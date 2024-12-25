@@ -15,6 +15,7 @@ import PagosScreen from "./screens/PagosScreen";
 import PerfilScreen from "./screens/PerfilScreen";
 import RegistroScreen from "./screens/RegistroScreen";
 import PersonaTipoClaseScreen from "./screens/PersonaTipoClaseScreen";
+import TipoClaseScreen from "./screens/TipoClaseScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -25,6 +26,15 @@ function AdminMenu() {
       <Drawer.Screen
         name="Tipo Clase por Persona"
         component={PersonaTipoClaseScreen}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <MaterialIcons name="class" color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Tipo Clase"
+        component={TipoClaseScreen}
         options={{
           drawerIcon: ({ color, size }) => (
             <MaterialIcons name="class" color={color} size={size} />
