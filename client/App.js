@@ -14,14 +14,32 @@ import ChatScreen from "./screens/ChatScreen";
 import PagosScreen from "./screens/PagosScreen";
 import PerfilScreen from "./screens/PerfilScreen";
 import RegistroScreen from "./screens/RegistroScreen";
-import TipoClaseScreen from "./screens/TipoClaseScreen";
+import PersonaTipoClaseScreen from "./screens/PersonaTipoClaseScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
+function AdminMenu() {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen
+        name="Tipo Clase por Persona"
+        component={PersonaTipoClaseScreen}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <MaterialIcons name="class" color={color} size={size} />
+          ),
+        }}
+      />
+
+      {/* Agrega más pantallas relacionadas con el rol de profesor */}
+    </Drawer.Navigator>
+  );
+}
+
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(""); // Nuevo estado para el obj usuario logueado
+  const [user, setUser] = useState(null); // Nuevo estado para el obj usuario logueado
 
   const handleLogin = (usr_prop) => {
     setUser(usr_prop); // Almacena el objeto del usuario
@@ -42,6 +60,8 @@ export default function App() {
       },
     ]);
   };
+
+  
 
   return (
     <NavigationContainer>
@@ -65,7 +85,6 @@ export default function App() {
               headerTitle: `Bienvenid@, ${user.nombre} ${user.apellidos}`,
             }}
           />
-
           <Drawer.Screen
             name="Perfil"
             component={PerfilScreen}
@@ -128,17 +147,19 @@ export default function App() {
               headerTitle: `Atletas | ${user.nombre} ${user.apellidos}`,
             }}
           />
-          <Drawer.Screen
-            name="Tipo Clase"
-            component={TipoClaseScreen}
-            initialParams={{ user }} // Envía los parámetros necesarios
-            options={{
-              drawerIcon: ({ color, size }) => (
-                <MaterialIcons name="emoji-events" color={color} size={size} />
-              ),
-              headerTitle: `Tipo Clase | ${user.nombre} ${user.apellidos}`,
-            }}
-          />
+
+          {user?.rol === "Profesor" && (
+            <Drawer.Screen
+              name="Admin Menu"
+              component={AdminMenu}
+              options={{
+                drawerIcon: ({ color, size }) => (
+                  <MaterialIcons name="school" color={color} size={size} />
+                ),
+                headerTitle: "Menú Administrador",
+              }}
+            />
+          )}
           <Drawer.Screen
             name="Cerrar Sesión"
             options={{

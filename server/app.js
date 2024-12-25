@@ -14,6 +14,7 @@ import {
   reservar,
   borrarReserva,
   deletePersonaTipoClase,
+  deleteTipoClase,
 } from "./database.js"; //Importamos métodos de database.js
 import cors from "cors"; //MidleWare, para que el backend pueda ser llamado desde el frontEnd.
 import nodemailer from "nodemailer";
@@ -164,6 +165,20 @@ app.get("/tipoClase", async (req, res) => {
   const tipoclases = await getTipoClase();
   res.status(200).send(tipoclases);
 });
+
+app.post("/tipoClase", async (req, res) => {
+  const { descripcion } = req.body;
+  const idTipoClase = await insertTipoClase(descripcion);
+  res
+    .status(201)
+    .send({ message: "tipoClase registrada correctamente" });
+});
+
+app.delete("/tipoClase/:id", async (req, res) => {
+  await deleteTipoClase(req.params.id);
+  res.send({ message: "Tipo Clase eliminada correctamente" });
+});
+
 
 app.get("/personaTipoClase/:id", async (req, res) => {
   const personas = await getTipoClaseByIdPersona(req.params.id);

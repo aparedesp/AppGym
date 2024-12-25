@@ -187,6 +187,35 @@ export async function getTipoClase() {
   }
 }
 
+export async function insertTipoClase(descripcion) {
+  try {
+    const [result] = await pool.query(
+      `INSERT INTO tipoClase (descripcion) 
+    VALUES (?, ?)`,
+      [descripcion]
+    );
+    const idTipoClase = result.insertId;
+    return idTipoClase;
+  } catch (error) {
+    console.error("Error insert tipoClase:", error);
+    throw error;
+  }
+}
+
+export async function deleteTipoClase(idTipoClase) {
+  try {
+    const [result] = await pool.query(
+      `DELETE FROM tipoClase WHERE idTipoClase = ?`,
+      [idTipoClase]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error delete tipoClase:", error);
+    throw error;
+  }
+}
+
+
 export async function getTipoClaseByIdPersona(id) {
   try {
     const [result] = await pool.query(
