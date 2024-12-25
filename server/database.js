@@ -191,7 +191,7 @@ export async function insertTipoClase(descripcion) {
   try {
     const [result] = await pool.query(
       `INSERT INTO tipoClase (descripcion) 
-    VALUES (?, ?)`,
+    VALUES (?)`,
       [descripcion]
     );
     const idTipoClase = result.insertId;
