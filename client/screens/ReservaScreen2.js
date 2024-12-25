@@ -308,9 +308,12 @@ export default function ReservaScreen2({ route }) {
           <View style={styles.encabezadoGrupo}>
             <Text style={styles.textoProfesor}>
               {profesor
-                ? `${profesor.nombre} ${profesor.apellidos}`
-                : "Profesor no asignado"}{" "}
-              - {tipoClase}
+                ? `Profesor : ${profesor.nombre} ${profesor.apellidos}`
+                : "No asignado"}
+            </Text>
+            <Text style={styles.textoProfesor}>
+              {"Clase: "}
+              {tipoClase}
             </Text>
           </View>
 

@@ -118,6 +118,7 @@ export default function PersonaTipoClaseScreen({ route }) {
       if (response.ok) {
         Alert.alert("Éxito", "Clase asignada correctamente.");
         fetchAsignados(selectedPersona.idPersona);
+        fetchTipoClasesNoAsignadas(selectedPersona.idPersona);
       } else {
         Alert.alert("Error", "No se pudo asignar la clase.");
       }
@@ -148,7 +149,7 @@ export default function PersonaTipoClaseScreen({ route }) {
   useFocusEffect(
     useCallback(() => {
       fetchPersonas();
-      fetchTipoClasesNoAsignadas();
+      //fetchTipoClasesNoAsignadas(selectedPersona.idPersona);
     }, [])
   );
 
@@ -169,6 +170,7 @@ export default function PersonaTipoClaseScreen({ route }) {
           onPress={() => {
             setSelectedPersona(Persona);
             fetchAsignados(Persona.idPersona);
+            fetchTipoClasesNoAsignadas(Persona.idPersona);
           }}
           style={[
             styles.item,
@@ -203,7 +205,7 @@ export default function PersonaTipoClaseScreen({ route }) {
       {selectedPersona && (
         <View>
           <Text style={styles.subtitle}>Asignar nueva clase:</Text>
-          {tiposClases.map((tipoClase) => (
+          {tiposClasesNoAsignadas.map((tipoClase) => (
             <TouchableOpacity
               key={tipoClase.idTipoClase}
               style={[
