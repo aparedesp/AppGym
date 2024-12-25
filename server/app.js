@@ -11,6 +11,7 @@ import {
   insertTipoClase,
   deleteTipoClase,
   getTipoClaseByIdPersona,
+  getTipoClaseNoAsignadaByIdPersona,
   insertPersonaTipoClase,
   deletePersonaTipoClase,
   getCalendarioPersona,
@@ -181,9 +182,14 @@ app.delete("/tipoClase/:id", async (req, res) => {
 });
 
 
-app.get("/personaTipoClase/:id", async (req, res) => {
-  const personas = await getTipoClaseByIdPersona(req.params.id);
-  res.status(200).send(personas);
+app.get("/TipoClaseByIdPersona/:id", async (req, res) => {
+  const tipoClases = await getTipoClaseByIdPersona(req.params.id);
+  res.status(200).send(tipoClases);
+});
+
+app.get("/TipoClaseNoAsignadaByIdPersona/:id", async (req, res) => {
+  const tipoClases = await getTipoClaseNoAsignadaByIdPersona(req.params.id);
+  res.status(200).send(tipoClases);
 });
 
 app.post("/personaTipoClase", async (req, res) => {

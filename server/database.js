@@ -58,7 +58,9 @@ export async function getPersonaByID(id) {
 
 export async function getPersonas() {
   try {
-    const [result] = await pool.query(`SELECT * FROM persona order by nombre, apellidos`);
+    const [result] = await pool.query(
+      `SELECT * FROM persona order by nombre, apellidos`
+    );
     return result;
   } catch (error) {
     console.error("Error fetching personas:", error);
@@ -215,7 +217,6 @@ export async function deleteTipoClase(idTipoClase) {
   }
 }
 
-
 export async function getTipoClaseByIdPersona(id) {
   try {
     const [result] = await pool.query(
@@ -232,6 +233,23 @@ export async function getTipoClaseByIdPersona(id) {
     return result;
   } catch (error) {
     console.error("Error fetching get TipoClase By Id Persona:", error);
+    throw error;
+  }
+}
+
+export async function getTipoClaseNoAsignadaByIdPersona(id) {
+  try {
+    const [result] = await pool.query(
+      `select tc.idTipoClase, tc.descripcion from tipoClase tc 
+        where tc.idTipoClase not in 
+        (select ptc.idTipoClase from persona p
+        join personaTipoClase ptc on p.idPersona=ptc.idPersona
+        where p.idPersona = ?)`,
+      [id]
+    );
+    return result;
+  } catch (error) {
+    console.error("Error fetching get TipoClase no asignada By Id Persona:", error);
     throw error;
   }
 }
@@ -320,6 +338,3 @@ export async function borrarReserva(idReserva) {
     throw error;
   }
 }
-
-
-

@@ -14,12 +14,12 @@ export default function PersonaTipoClaseScreen({ route }) {
   const [Personas, setPersonas] = useState([]);
   const [filteredPersonas, setFilteredPersonas] = useState([]);
   const [selectedPersona, setSelectedPersona] = useState(null);
-  const [tiposClases, setTiposClases] = useState([]);
+  const [tiposClasesNoAsignadas, setTiposClasesNoAsignadas] = useState([]);
   const [asignados, setAsignados] = useState([]);
   const [selectedIdTipoClase, setSelectedIdTipoClase] = useState("");
   const [searchText, setSearchText] = useState("");
 
-  // Obtener Personas desde el backend
+  // Obtener Personas 
   const fetchPersonas = useCallback(async () => {
     try {
       const response = await fetch(
@@ -37,30 +37,12 @@ export default function PersonaTipoClaseScreen({ route }) {
     }
   }, []);
 
-  // Obtener tipos de clase desde el backend
-  const fetchTipoClases = useCallback(async () => {
-    try {
-      const response = await fetch(
-        `https://appgym-production.up.railway.app/tipoClase/`
-      );
-      const data = await response.json();
-      console.log("Tipos de clases obtenidos:", data);
-      if (response.ok) {
-        setTiposClases(data);
-      } else {
-        Alert.alert("Error", "No se pudieron cargar los tipos de clase.");
-      }
-    } catch (error) {
-      console.error("Error al obtener tipos de clase:", error);
-    }
-  }, []);
-
   // Obtener clases asignadas de una persona
   const fetchAsignados = async (idPersona) => {
     try {
       console.log("fetchAsignados/IdPersona:" + idPersona);
       const response = await fetch(
-        `https://appgym-production.up.railway.app/personaTipoClase/${idPersona}`
+        `https://appgym-production.up.railway.app/TipoClaseByIdPersona/${idPersona}`
       );
       const data = await response.json();
       if (response.ok) {
@@ -74,6 +56,27 @@ export default function PersonaTipoClaseScreen({ route }) {
       setAsignados([]);
     }
   };
+
+    // Obtener tipos de clase no asignadas a la persona
+  const fetchTipoClasesNoAsignadas = useCallback(async (idPersona) => {
+    try {
+      const response = await fetch(
+        `https://appgym-production.up.railway.app/TipoClaseNoAsignadaByIdPersona/${idPersona}`
+      );
+      const data = await response.json();
+      console.log("Tipos de clases no asignadas obtenidos:", data);
+      if (response.ok) {
+        setTiposClasesNoAsignadas(data);
+      } else {
+        Alert.alert(
+          "Error",
+          "No se pudieron cargar los tipos de clase no asignadas."
+        );
+      }
+    } catch (error) {
+      console.error("Error al obtener tipos de clase no asignadas:", error);
+    }
+  }, []);
 
   // Filtrar Personas al escribir
   const handleSearch = (text) => {
@@ -133,6 +136,7 @@ export default function PersonaTipoClaseScreen({ route }) {
       if (response.ok) {
         Alert.alert("Éxito", "Clase eliminada correctamente.");
         fetchAsignados(selectedPersona.idPersona);
+        fetchTipoClasesNoAsignadas(selectedPersona.idPersona);
       } else {
         Alert.alert("Error", "No se pudo eliminar la clase.");
       }
@@ -144,7 +148,7 @@ export default function PersonaTipoClaseScreen({ route }) {
   useFocusEffect(
     useCallback(() => {
       fetchPersonas();
-      fetchTipoClases();
+      fetchTipoClasesNoAsignadas();
     }, [])
   );
 
